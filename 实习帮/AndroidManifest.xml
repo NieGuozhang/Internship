@@ -1,0 +1,110 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.hbut.internship"
+    android:versionCode="2"
+    android:versionName="1.5" >
+
+    <uses-sdk
+        android:minSdkVersion="8"
+        android:targetSdkVersion="19" />
+    
+    <!-- 百度API所需权限 -->  
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />  
+    <uses-permission android:name="android.permission.USE_CREDENTIALS" />  
+    <uses-permission android:name="android.permission.MANAGE_ACCOUNTS" />  
+    <uses-permission android:name="android.permission.AUTHENTICATE_ACCOUNTS" />  
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />  
+    <uses-permission android:name="android.permission.INTERNET" />  
+    <uses-permission android:name="com.android.launcher.permission.READ_SETTINGS" />  
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />  
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />  
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />  
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />  
+    <uses-permission android:name="android.permission.BROADCAST_STICKY" />  
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />  
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />  
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+
+    <uses-feature android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false" />
+
+    <application
+        android:name="com.hbut.internship.util.MyApplication"
+        android:allowBackup="true"
+        android:icon="@drawable/icon"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme" >
+        <service android:name="com.hbut.internship.service.LongRunningService" >
+        </service>
+
+        <meta-data
+            android:name="com.baidu.lbsapi.API_KEY"
+            android:value="gWEIekb5WYdGIEvyCI6T6MMN3l5gLMTt" />
+
+        <activity
+            android:name="com.hbut.internship.activity.LoginActivity"
+            android:alwaysRetainTaskState="true"
+            android:theme="@android:style/Theme.Light.NoTitleBar" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name="com.hbut.internship.activity.MainActivity" >
+        </activity>
+        <activity android:name="com.hbut.internship.activity.FindInternshipActivity" >
+        </activity>
+        <activity android:name="com.hbut.internship.activity.SchoolRecommendActivity" >
+        </activity>
+        <activity android:name="com.hbut.internship.activity.FindInternshipSearchActivity" >
+        </activity>
+        <activity android:name="com.hbut.internship.activity.PersonalInformationActivity" >
+        </activity>
+        <activity android:name="com.hbut.internship.activity.MyInternshipActivity" >
+        </activity>
+        <activity android:name="com.hbut.internship.activity.NullMyResumeActivity" >
+        </activity>
+        <activity android:name="com.hbut.internship.activity.MyCollectionActivity" >
+        </activity>
+        <activity android:name="com.hbut.internship.activity.EnterpriseInformationActivity" >
+        </activity>
+        <activity
+            android:name="com.hbut.internship.activity.PositionInformationActivity"
+            android:launchMode="singleTask" >
+        </activity>
+        <activity android:name="com.hbut.internship.activity.ModifyPasswordActivity" >
+        </activity>
+        <activity android:name="com.hbut.internship.activity.MySettingsActivity" >
+        </activity>
+        <activity android:name="com.hbut.internship.activity.FeedbackActivity" >
+        </activity>
+        <activity android:name="com.hbut.internship.activity.MyApplyActivity" >
+        </activity>
+        <activity android:name="com.hbut.internship.activity.ForgetPassword1Activity" >
+        </activity>
+        <activity android:name="com.hbut.internship.activity.ForgetPassword2Activity" >
+        </activity>
+        <activity android:name="com.hbut.internship.activity.NewMyResumeActivity" >
+        </activity>
+        <activity android:name="com.hbut.internship.activity.MyResumeActivity" >
+        </activity>
+        <activity android:name="com.hbut.internship.activity.MyApplySpecificInfoActivity" >
+        </activity>
+        <activity android:name="com.hbut.internship.activity.ExperienceActivity" >
+        </activity>
+        <activity android:name="com.hbut.internship.activity.MyInternActivity" >
+        </activity>
+        <activity android:name="com.hbut.internship.activity.DaohangActivity" >
+        </activity>
+    </application>
+
+</manifest>

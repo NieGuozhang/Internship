@@ -1,0 +1,460 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#D9D9D9"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:id="@+id/linearLayout_position"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/title_bg"
+        android:gravity="center_vertical"
+        android:orientation="horizontal" >
+
+        <ImageButton
+            android:id="@+id/imbt_myintern_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/title_bg"
+            android:scaleType="fitXY"
+            android:src="@drawable/zuo"
+            android:textColor="#FFFFFF" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="30dp"
+            android:background="@color/title_bg"
+            android:gravity="center_horizontal"
+            android:paddingBottom="5dp"
+            android:paddingRight="5dp"
+            android:paddingTop="5dp"
+            android:text="我的实习"
+            android:textColor="#FFFFFF"
+            android:textSize="25sp" />
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="none" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="5dp"
+                android:background="#FFFFFF"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical|left"
+                    android:paddingLeft="5dp"
+                    android:text="实习职位名称："
+                    android:textColor="#A9A9A9" />
+
+                <TextView
+                    android:id="@+id/tv_mi_poname"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="left|fill_vertical"
+                    android:padding="2dp"
+                    android:textColor="#000000"
+                    android:textSize="20sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="5dp"
+                android:background="#FFFFFF"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:drawableLeft="@drawable/qiye"
+                    android:gravity="center_vertical|left"
+                    android:paddingLeft="5dp"
+                    android:text="实习企业名称："
+                    android:textColor="#A9A9A9" />
+
+                <TextView
+                    android:id="@+id/tv_mi_enname"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#FFFFFF"
+                    android:drawableRight="@drawable/suggest_arrow"
+                    android:gravity="left|fill_vertical"
+                    android:padding="2dp"
+                    android:textColor="#90EE90"
+                    android:textSize="20sp"
+                    android:textStyle="normal" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="5dp"
+                android:background="#FFFFFF"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:drawableLeft="@drawable/shouru"
+                    android:gravity="center_vertical|left"
+                    android:paddingLeft="5dp"
+                    android:text="实习薪资待遇："
+                    android:textColor="#A9A9A9" />
+
+                <TextView
+                    android:id="@+id/tv_mi_salary"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="left|fill_vertical"
+                    android:padding="2dp"
+                    android:textColor="#FFA500"
+                    android:textSize="20sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="5dp"
+                android:background="#FFFFFF"
+                android:orientation="horizontal" >
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:drawableLeft="@drawable/jd_icon_work_year"
+                        android:gravity="center_vertical|left"
+                        android:paddingLeft="5dp"
+                        android:text="实习工作时间："
+                        android:textColor="#A9A9A9" />
+
+                    <TextView
+                        android:id="@+id/tv_mi_worktime"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="left|fill_vertical"
+                        android:padding="1dp"
+                        android:textColor="#556B2F"
+                        android:textSize="20sp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="5dp"
+                android:background="#FFFFFF"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:drawableLeft="@drawable/jd_icon_location"
+                    android:gravity="center_vertical|left"
+                    android:paddingLeft="5dp"
+                    android:text="实习地点："
+                    android:textColor="#A9A9A9" />
+
+                <TextView
+                    android:id="@+id/tv_mi_poaddress"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="left|fill_vertical"
+                    android:padding="2dp"
+                    android:textColor="#556B2F"
+                    android:textSize="20sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="5dp"
+                android:background="#FFFFFF"
+                android:orientation="horizontal" >
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:drawableLeft="@drawable/jd_icon_education"
+                        android:gravity="center_vertical|left"
+                        android:paddingLeft="5dp"
+                        android:text="学历要求："
+                        android:textColor="#A9A9A9" />
+
+                    <TextView
+                        android:id="@+id/tv_mi_poeducation"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="left|fill_vertical"
+                        android:padding="2dp"
+                        android:textColor="#0000FF"
+                        android:textSize="20sp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="5dp"
+                android:background="#FFFFFF"
+                android:orientation="horizontal" >
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:drawableLeft="@drawable/jd_icon_work_type"
+                        android:gravity="center_vertical|left"
+                        android:paddingLeft="5dp"
+                        android:text="职位类型："
+                        android:textColor="#A9A9A9" />
+
+                    <TextView
+                        android:id="@+id/tv_mi_potype"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="left|fill_vertical"
+                        android:padding="2dp"
+                        android:textColor="#0000FF"
+                        android:textSize="20sp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="5dp"
+                android:background="#FFFFFF"
+                android:orientation="horizontal" >
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:drawableLeft="@drawable/people"
+                        android:gravity="center_vertical|left"
+                        android:paddingLeft="5dp"
+                        android:text="招聘人数："
+                        android:textColor="#A9A9A9" />
+
+                    <TextView
+                        android:id="@+id/tv_mi_popeoplenumber"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="left|fill_vertical"
+                        android:padding="2dp"
+                        android:textColor="#556B2F"
+                        android:textSize="20sp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="5dp"
+                android:background="#FFFFFF"
+                android:orientation="horizontal" >
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:drawableLeft="@drawable/warning"
+                        android:gravity="center_vertical|left"
+                        android:paddingLeft="5dp"
+                        android:text="截止日期："
+                        android:textColor="#A9A9A9" />
+
+                    <TextView
+                        android:id="@+id/tv_mi_closingdate"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="left|fill_vertical"
+                        android:padding="2dp"
+                        android:textColor="#556B2F"
+                        android:textSize="20sp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="5dp"
+                android:background="#FFFFFF"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#FFFFFF"
+                    android:drawableLeft="@drawable/miaoshu"
+                    android:gravity="center_vertical|left"
+                    android:paddingLeft="5dp"
+                    android:text="职位描述"
+                    android:textColor="#A9A9A9" />
+
+                <TextView
+                    android:id="@+id/tv_mi_jobdescription"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_marginTop="5dp"
+                android:background="#FFFFFF"
+                android:gravity="center_vertical"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="5dp"
+                    android:text="实习状态："
+                    android:textColor="#FFA500"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/tv_mi_state"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="left|fill_vertical"
+                    android:padding="2dp"
+                    android:textColor="#8B0000"
+                    android:textSize="20sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linearLayout_ratingbar"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_marginTop="5dp"
+                android:gravity="center"
+                android:orientation="vertical" >
+
+                <EditText
+                    android:id="@+id/et_mi_comment"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:layout_margin="2dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/shape_edit_blue"
+                    android:gravity="top|left"
+                    android:hint="请输入您对该实习职位的评价" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_marginTop="5dp"
+                android:gravity="center"
+                android:orientation="vertical" >
+
+                <EditText
+                    android:id="@+id/et_mi_summary"
+                    android:layout_width="match_parent"
+                    android:layout_height="180dp"
+                    android:layout_margin="2dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/shape_edit_blue"
+                    android:gravity="top|left"
+                    android:hint="请输入您对本次实习的总结，这些总结将会作为你今后的实习经历。" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linearLayout_comment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingLeft="10dp" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="星级评价："
+                    android:textColor="#32CD32"
+                    android:textSize="15sp" />
+
+                <RatingBar
+                    android:id="@+id/mi_ratingbar"
+                    style="?android:attr/ratingBarStyleSmall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:isIndicator="false"
+                    android:numStars="5"
+                    android:rating="0"
+                    android:stepSize="0.125" />
+
+                <Button
+                    android:id="@+id/bt_mi_confirm"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/shape2_blue"
+                    android:gravity="center"
+                    android:text="确认"
+                    android:textColor="#FFFFFF" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

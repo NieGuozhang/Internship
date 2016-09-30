@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:orientation="horizontal" >
+
+        <EditText
+            android:id="@+id/et_search"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:background="@drawable/shape_edit_blue"
+            android:completionHint="输入搜索内容"
+            android:completionThreshold="2"
+            android:hint="请输入企业、实习名称"
+            android:padding="5dp" />
+    </LinearLayout>
+
+    <com.hbut.internship.view.RefreshableView
+        android:id="@+id/findintren_refreshable_view"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" >
+
+        <ListView
+            android:id="@+id/lv_findinternship"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="5dp"
+            android:scrollbars="none" >
+        </ListView>
+    </com.hbut.internship.view.RefreshableView>
+
+</LinearLayout>
