@@ -1,123 +1,487 @@
 package com.hbut.internship.activity;
 
+import java.text.DecimalFormat;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.baidu.location.BDLocation;
+import com.baidu.location.BDLocationListener;
+import com.baidu.location.LocationClient;
+import com.baidu.location.LocationClientOption;
 import com.baidu.mapapi.SDKInitializer;
 import com.baidu.mapapi.map.BaiduMap;
+import com.baidu.mapapi.map.BitmapDescriptor;
+import com.baidu.mapapi.map.BitmapDescriptorFactory;
+import com.baidu.mapapi.map.MapStatusUpdate;
+import com.baidu.mapapi.map.MapStatusUpdateFactory;
 import com.baidu.mapapi.map.MapView;
+import com.baidu.mapapi.map.MyLocationConfiguration;
+import com.baidu.mapapi.map.MyLocationConfiguration.LocationMode;
+import com.baidu.mapapi.map.MyLocationData;
+import com.baidu.mapapi.model.LatLng;
+import com.baidu.mapapi.navi.BaiduMapAppNotSupportNaviException;
+import com.baidu.mapapi.navi.BaiduMapNavigation;
+import com.baidu.mapapi.navi.NaviPara;
+import com.baidu.mapapi.overlayutil.DrivingRouteOverlay;
+import com.baidu.mapapi.overlayutil.TransitRouteOverlay;
+import com.baidu.mapapi.overlayutil.WalkingRouteOverlay;
+import com.baidu.mapapi.search.core.RouteLine;
+import com.baidu.mapapi.search.core.SearchResult;
+import com.baidu.mapapi.search.geocode.GeoCodeResult;
+import com.baidu.mapapi.search.geocode.GeoCoder;
+import com.baidu.mapapi.search.geocode.OnGetGeoCoderResultListener;
+import com.baidu.mapapi.search.geocode.ReverseGeoCodeOption;
+import com.baidu.mapapi.search.geocode.ReverseGeoCodeResult;
+import com.baidu.mapapi.search.route.DrivingRoutePlanOption;
+import com.baidu.mapapi.search.route.DrivingRoutePlanOption.DrivingPolicy;
+import com.baidu.mapapi.search.route.DrivingRouteResult;
+import com.baidu.mapapi.search.route.OnGetRoutePlanResultListener;
+import com.baidu.mapapi.search.route.PlanNode;
+import com.baidu.mapapi.search.route.RoutePlanSearch;
+import com.baidu.mapapi.search.route.TransitRoutePlanOption;
+import com.baidu.mapapi.search.route.TransitRoutePlanOption.TransitPolicy;
+import com.baidu.mapapi.search.route.TransitRouteResult;
+import com.baidu.mapapi.search.route.WalkingRoutePlanOption;
+import com.baidu.mapapi.search.route.WalkingRouteResult;
+import com.baidu.mapapi.utils.DistanceUtil;
 import com.hbut.internship.R;
-import com.hbut.internship.util.MyApplication;
+import com.hbut.internship.util.LocationUtils;
+import com.hbut.internship.util.TimeUtils;
+import com.hbut.internship.util.ToastUtil;
+import com.hbut.internship.view.MyOrientationListener;
+import com.hbut.internship.view.MyOrientationListener.OnOrientationListener;
 import com.internship.model.Position;
 
 /**
- * 路线导航
+ * 路线导航界面
  * 
  * @author Nie
  * 
  */
-public class DaohangActivity extends BaseActivity implements OnClickListener {
+public class DaohangActivity extends BaseActivity implements OnClickListener,
+		OnGetGeoCoderResultListener, OnGetRoutePlanResultListener {
 
-	private MapView mMapView = null;
-	private BaiduMap baiduMap;
+	private NaviPara para;
+	private MapView mMapView;
+	private BaiduMap mBaiduMap;
+	private GeoCoder mSearch;// 反地理编码查询
 
-	private TextView enname, instance, poaddress;
-	private ImageButton location, back, car, bus, walk;
-	private Button daohang;
+	// 定位相关
+	private LocationClient mLocationClient;
+	private MyLocationListener mLocationListener;
+	private boolean isFirstIn = true;
+	private boolean flag = false;// 标记是否已经定位过
+	private double mLatitude;// 定位得到的纬度
+	private double mLongtitude;// 定位得到的经度
+	private double lat;// 实习地点的纬度
+	private double lon;// 实习地点的经度
 
+	// 路线
+	private RouteLine route = null;
+	// 路线搜索相关
+	private RoutePlanSearch routePlanSearch = null;
+	private PlanNode stNode = null;// 起始点
+	private PlanNode enNode = null;// 终点
+
+	// 自定义定位图标
+	private BitmapDescriptor mIconLocation;
+	private MyOrientationListener myOrientationListener = null;
+	private float mCurrentX;
+	private LocationMode mLocationMode;
+
+	private ImageButton imbt_location;
+	private TextView poaddress, instance;
+	private Button daohang, car, bus, walk;
 	private Position position;
+
+	private String ecity;// 实习地点城市。
+	private double juli;
+	private DecimalFormat df = new DecimalFormat("#.00");// 将double数只保留两位小数。
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-		SDKInitializer.initialize(getApplicationContext());// 关键
+		SDKInitializer.initialize(getApplicationContext());
 		setContentView(R.layout.activity_daohang);
 
-		Bundle bundle = getIntent().getExtras();
-		position = (Position) bundle.getSerializable("position");
+		position = (Position) getIntent().getSerializableExtra("Position");
+		lat = getIntent().getDoubleExtra("lat", 0);
+		lon = getIntent().getDoubleExtra("lon", 0);
 
 		findView();
-		init();
+
+		// 初始化定位
+		initMyLocation();
+
+		initView();
+
 	}
 
-	/**
-	 * 初始化控件
-	 */
 	private void findView() {
 		mMapView = (MapView) findViewById(R.id.mapview);
-
-		enname = (TextView) findViewById(R.id.tv_daohang_enname);
+		mBaiduMap = mMapView.getMap();
+		MapStatusUpdate msu = MapStatusUpdateFactory.zoomTo(15.0f);
+		mBaiduMap.setMapStatus(msu);
+		imbt_location = (ImageButton) findViewById(R.id.imbt_daohang_location);
+		imbt_location.setOnClickListener(this);
 		poaddress = (TextView) findViewById(R.id.tv_daohang_poaddress);
 		instance = (TextView) findViewById(R.id.tv_daohang_instance);
-
-		back = (ImageButton) findViewById(R.id.imbt_daohang_back);// 返回 按钮
-		back.setOnClickListener(this);
-		location = (ImageButton) findViewById(R.id.imbt_daohang_location);// 定位按钮
-		location.setOnClickListener(this);
-		daohang = (Button) findViewById(R.id.bt_daohang_daohang);// 导航按钮
+		car = (Button) findViewById(R.id.bt_daohang_car);
+		bus = (Button) findViewById(R.id.bt_daohang_bus);
+		walk = (Button) findViewById(R.id.bt_daohang_walk);
+		daohang = (Button) findViewById(R.id.bt_daohang_daohang);
 		daohang.setOnClickListener(this);
 
-		car = (ImageButton) findViewById(R.id.imbt_daohang_car);// 汽车导航
-		bus = (ImageButton) findViewById(R.id.imbt_daohang_bus);// 公交导航
-		walk = (ImageButton) findViewById(R.id.imbt_daohang_walk);// 步行导航
 		car.setOnClickListener(this);
 		bus.setOnClickListener(this);
 		walk.setOnClickListener(this);
+
 	}
 
-	private void init() {
+	private void initView() {
+
+		// 根据实习地点的位置给poaddress赋值
+		LatLng latLng1 = new LatLng(lat, lon);// 实习地点
+		mSearch = GeoCoder.newInstance();
+		mSearch.setOnGetGeoCodeResultListener(this);
+		mSearch.reverseGeoCode(new ReverseGeoCodeOption().location(latLng1));// 反地理编码查询。
+
+		// 路线查询初始化及结果监听
+		routePlanSearch = RoutePlanSearch.newInstance();
+		routePlanSearch.setOnGetRoutePlanResultListener(this);
+	}
+
+	/**
+	 * 初始化定位
+	 */
+	private void initMyLocation() {
+
+		mLocationMode = LocationMode.NORMAL;
+		mLocationClient = new LocationClient(this);
+
+		mLocationListener = new MyLocationListener();
+		mLocationClient.registerLocationListener(mLocationListener);
+
+		LocationClientOption option = new LocationClientOption();
+		option.setCoorType("bd09ll");
+		option.setIsNeedAddress(true);
+		option.setOpenGps(true);
+		option.setScanSpan(1000);
+		mLocationClient.setLocOption(option);
+		// 初始化图标
+		mIconLocation = BitmapDescriptorFactory
+				.fromResource(R.drawable.navi_map_gps_locked);
+		myOrientationListener = new MyOrientationListener(
+				getApplicationContext());
+
+		myOrientationListener
+				.setOnOrientationListener(new OnOrientationListener() {
+					@Override
+					public void onOrientationChanged(float x) {
+						mCurrentX = x;
+					}
+				});
+
+	}
+
+	@Override
+	protected void onDestroy() {
 		// TODO Auto-generated method stub
-		enname.setText(position.getEnterprise().getEnName());
-		poaddress.setText(position.getPoAddress());
+		super.onDestroy();
+		mBaiduMap.setMyLocationEnabled(false);
+		mMapView.onDestroy();
+		mMapView = null;
+		mSearch.destroy();
+		if (routePlanSearch != null) {
+			routePlanSearch.destroy();
+		}
+	}
+
+	@Override
+	protected void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
+		mMapView.onResume();
+	}
+
+	@Override
+	protected void onStart() {
+		// TODO Auto-generated method stub
+		super.onStart();
+
+		// centerToMyLocation(45.0, 45.0);
+		LocationUtils.initLocation(mBaiduMap, lat, lon);
+	}
+
+	@Override
+	protected void onStop() {
+		// TODO Auto-generated method stub
+		super.onStop();
+		// 停止定位
+		mBaiduMap.setMyLocationEnabled(false);
+		mLocationClient.stop();
+	}
+
+	@Override
+	protected void onPause() {
+		// TODO Auto-generated method stub
+		super.onPause();
+		mMapView.onPause();
 	}
 
 	@Override
 	public void onClick(View v) {
 		// TODO Auto-generated method stub
 		switch (v.getId()) {
-		case R.id.imbt_daohang_back:
-			finish();
-			break;
-		case R.id.imbt_daohang_location:// 定位服务
-
-			break;
-		case R.id.bt_daohang_daohang:// 导航
-
-			break;
-		case R.id.imbt_daohang_car:// 汽车导航
-			break;
-		case R.id.imbt_daohang_bus:// 公交导航
-			break;
-		case R.id.imbt_daohang_walk:// 步行导航
+		case R.id.imbt_daohang_location:
+			flag = true;// 设置成已经定位
+			mBaiduMap.setMyLocationEnabled(true);
+			if (!mLocationClient.isStarted())
+				mLocationClient.start();
+			// 开启方向传感器
+			myOrientationListener.start();
+			LocationUtils.centerToMyLocation(mBaiduMap, mLatitude, mLongtitude);
 			break;
 
+		/**
+		 * 步行1分钟 0.06公里 驾车1分钟 0.55公里 公交1分钟 0.15公里
+		 * 
+		 * @param minute
+		 * @return
+		 */
+		case R.id.bt_daohang_car:// 驾车路线
+			if (flag) {
+				// 重置浏览节点的路线数据
+				if (route != null)
+					route = null;
+				mBaiduMap.clear();
+				routePlanSearch.drivingSearch((new DrivingRoutePlanOption())
+						.from(stNode).to(enNode)
+						.policy(DrivingPolicy.ECAR_DIS_FIRST));// 距离优先
+				int cartime = (int) (juli / (1000 * 0.55));
+				car.setText(TimeUtils.timeFormatter(cartime));
+			} else {
+				ToastUtil.showtoast("抱歉，请先定位");
+			}
+			break;
+		case R.id.bt_daohang_bus:// 换乘路线
+			if (flag) {
+				// 重置浏览节点的路线数据
+				if (route != null)
+					route = null;
+				mBaiduMap.clear();
+				routePlanSearch.transitSearch((new TransitRoutePlanOption())
+						.from(stNode).city(ecity).to(enNode)
+						.policy(TransitPolicy.EBUS_WALK_FIRST));// 少步行
+				if (route == null) {
+					bus.setText("无");
+				} else {
+					int bustime = (int) (juli / (1000 * 0.15));
+					bus.setText(TimeUtils.timeFormatter(bustime));
+				}
+			} else {
+				ToastUtil.showtoast("抱歉，请先定位");
+			}
+			break;
+		case R.id.bt_daohang_walk:// 步行路线
+			if (flag) {
+				// 重置浏览节点的路线数据
+				if (route != null)
+					route = null;
+				mBaiduMap.clear();
+				routePlanSearch.walkingSearch((new WalkingRoutePlanOption())
+						.from(stNode).to(enNode));
+				int walktime = (int) (juli / (1000 * 0.06));
+				walk.setText(TimeUtils.timeFormatter(walktime));
+			} else {
+				ToastUtil.showtoast("抱歉，请先定位");
+			}
+			break;
+		case R.id.bt_daohang_daohang:
+			if (flag) {
+				para = new NaviPara();
+				para.startPoint = new LatLng(mLatitude, mLongtitude);
+				para.startName = "从这里开始";
+				para.endPoint = new LatLng(lat, lon);
+				para.endName = "到这里结束";
+				try {
+
+					BaiduMapNavigation.openBaiduMapNavi(para, this);
+
+				} catch (BaiduMapAppNotSupportNaviException e) {
+					e.printStackTrace();
+					Toast.makeText(DaohangActivity.this, "未找到应用",
+							Toast.LENGTH_SHORT).show();
+				}
+			} else {
+				ToastUtil.showtoast("抱歉，请先定位");
+			}
+
+			break;
 		default:
 			break;
 		}
 	}
 
-	@Override
-	protected void onResume() {
-		super.onResume();
-		mMapView.onResume();
+	/**
+	 * 定位监听器
+	 * 
+	 * @author Nie
+	 * 
+	 */
+	private class MyLocationListener implements BDLocationListener {
+		@Override
+		public void onReceiveLocation(BDLocation location) {
+
+			MyLocationData data = new MyLocationData.Builder()//
+					.direction(mCurrentX)//
+					.accuracy(location.getRadius())//
+					.latitude(location.getLatitude())//
+					.longitude(location.getLongitude())//
+					.build();
+			mBaiduMap.setMyLocationData(data);
+			// 设置自定义图标
+			MyLocationConfiguration config = new MyLocationConfiguration(
+					mLocationMode, true, mIconLocation);
+			mBaiduMap.setMyLocationConfigeration(config);
+
+			// 更新经纬度
+			mLatitude = location.getLatitude();
+			mLongtitude = location.getLongitude();
+			// 开启定位
+			if (isFirstIn) {
+				LatLng latLng = new LatLng(mLatitude, mLongtitude);
+				MapStatusUpdate msu = MapStatusUpdateFactory.newLatLng(latLng);
+				mBaiduMap.animateMapStatus(msu);
+				isFirstIn = false;
+			}
+
+			LatLng poLatLng = new LatLng(mLatitude, mLongtitude);
+			LatLng latLng = new LatLng(lat, lon);
+			juli = new DistanceUtil().getDistance(latLng, poLatLng);// 查询两地间的距离,单位是m，返回-1时表示转换错误。
+			if (juli == -1) {
+				instance.setText("转换错误");
+			} else {
+				df = new DecimalFormat("#.00");// 将double数只保留两位小数。
+				instance.setText("距离该实习地点" + df.format(juli / 1000) + "千米");
+			}
+			setNode();
+		}
 	}
 
+	// 地理编码：地址到经纬度
 	@Override
-	protected void onPause() {
-		super.onPause();
-		mMapView.onPause();
+	public void onGetGeoCodeResult(GeoCodeResult result) {
+		// TODO Auto-generated method stub
+
 	}
 
+	// 反地理编码结果 经纬度到地址
 	@Override
-	protected void onDestroy() {
-		mMapView.onDestroy();
-		mMapView = null;
-		super.onDestroy();
+	public void onGetReverseGeoCodeResult(ReverseGeoCodeResult result) {
+		// TODO Auto-generated method stub
+		if (result == null || result.error != SearchResult.ERRORNO.NO_ERROR) {
+			return;
+		} else {
+			poaddress.setText(result.getAddress());// 给实习地点赋值
+			ecity = result.getAddressDetail().city;// 得到实习地点所在的城市。
+		}
 	}
 
+	/**
+	 * 设置路线规划的起始点。
+	 */
+	private void setNode() {
+		// 根据坐标查询 我的坐标 ---> 目标marker
+		stNode = PlanNode.withLocation(new LatLng(mLatitude, mLongtitude));
+		enNode = PlanNode.withLocation(new LatLng(lat, lon));
+	}
+
+	/**
+	 * 路线规划监听器
+	 */
+	// 驾车路线规划
+	@Override
+	public void onGetDrivingRouteResult(DrivingRouteResult result) {
+		// TODO Auto-generated method stub
+		if (result == null || result.error != SearchResult.ERRORNO.NO_ERROR) {
+			Toast.makeText(DaohangActivity.this, "抱歉，未找到结果", Toast.LENGTH_SHORT)
+					.show();
+		}
+		if (result.error == SearchResult.ERRORNO.AMBIGUOUS_ROURE_ADDR) {
+
+			return;
+		}
+		if (result.error == SearchResult.ERRORNO.NO_ERROR) {
+
+			route = result.getRouteLines().get(0);
+			DrivingRouteOverlay overlay = new DrivingRouteOverlay(mBaiduMap);
+
+			mBaiduMap.setOnMarkerClickListener(overlay);
+
+			overlay.setData(result.getRouteLines().get(0));
+			overlay.addToMap(); // 将所有Overlay 添加到地图上
+			overlay.zoomToSpan(); // 缩放地图，使所有Overlay都在合适的视野内 注：
+									// 该方法只对Marker类型的overlay有效
+		}
+
+	}
+
+	// 换乘路线规划
+	@Override
+	public void onGetTransitRouteResult(TransitRouteResult result) {
+		// TODO Auto-generated method stub
+		if (result == null || result.error != SearchResult.ERRORNO.NO_ERROR) {
+			Toast.makeText(DaohangActivity.this, "抱歉，未找到结果", Toast.LENGTH_SHORT)
+					.show();
+		}
+		if (result.error == SearchResult.ERRORNO.AMBIGUOUS_ROURE_ADDR) {
+
+			return;
+		}
+		if (result.error == SearchResult.ERRORNO.NO_ERROR) {
+
+			route = result.getRouteLines().get(0);
+			TransitRouteOverlay overlay = new TransitRouteOverlay(mBaiduMap);
+			// routeOverlay = overlay;
+
+			mBaiduMap.setOnMarkerClickListener(overlay);
+
+			overlay.setData(result.getRouteLines().get(0));
+			overlay.addToMap(); // 将所有Overlay 添加到地图上
+			overlay.zoomToSpan(); // 缩放地图，使所有Overlay都在合适的视野内 注：
+									// 该方法只对Marker类型的overlay有效
+		}
+	}
+	// 步行路线规划
+	@Override
+	public void onGetWalkingRouteResult(WalkingRouteResult result) {
+		// TODO Auto-generated method stub
+		if (result == null || result.error != SearchResult.ERRORNO.NO_ERROR) {
+			Toast.makeText(DaohangActivity.this, "抱歉，未找到结果", Toast.LENGTH_SHORT)
+					.show();
+		}
+		if (result.error == SearchResult.ERRORNO.AMBIGUOUS_ROURE_ADDR) {
+
+			return;
+		}
+		if (result.error == SearchResult.ERRORNO.NO_ERROR) {
+
+			route = result.getRouteLines().get(0);
+			WalkingRouteOverlay overlay = new WalkingRouteOverlay(mBaiduMap);
+			// routeOverlay = overlay;
+			mBaiduMap.setOnMarkerClickListener(overlay);
+
+			overlay.setData(result.getRouteLines().get(0));
+			overlay.addToMap(); // 将所有Overlay 添加到地图上
+			overlay.zoomToSpan(); // 缩放地图，使所有Overlay都在合适的视野内 注：
+									// 该方法只对Marker类型的overlay有效
+		}
+	}
 }

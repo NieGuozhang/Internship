@@ -20,7 +20,7 @@ import android.widget.TextView;
 import com.hbut.internship.R;
 import com.hbut.internship.util.Internet;
 import com.hbut.internship.util.MyApplication;
-import com.hbut.internship.util.ObjectAndByte;
+import com.hbut.internship.util.ObjectAndByteUtil;
 import com.hbut.internship.util.ToastUtil;
 import com.internship.model.Apply;
 
@@ -227,7 +227,7 @@ public class MyApplySpecificInfoActivity extends BaseActivity implements
 									}
 								}
 							}).start();
-							byte[] applyposition = ObjectAndByte
+							byte[] applyposition = ObjectAndByteUtil
 									.ObjectToByte(apply);
 							editor.putString("setposition",
 									applyposition.toString());

@@ -23,7 +23,7 @@ import android.widget.ImageButton;
 
 import com.hbut.internship.R;
 import com.hbut.internship.adapter.PositionListViewAdapter;
-import com.hbut.internship.util.CompareTime;
+import com.hbut.internship.util.TimeUtils;
 import com.hbut.internship.util.Internet;
 import com.hbut.internship.util.MyApplication;
 import com.hbut.internship.util.ToastUtil;
@@ -95,7 +95,7 @@ public class MyCollectionActivity extends BaseActivity {
 					int len = positionList.size();
 					Time time = new Time("GMT+8");// 获取当前系统时间
 					for (int i = 0; i < len; i++) {
-						if (CompareTime.compare_date(positionList.get(i)
+						if (TimeUtils.compare_date(positionList.get(i)
 								.getClosingdate().toString(), time.toString()) != 1) {
 							positionList.add(positionList.get(i));// 将过期的收藏置于最后面
 							positionList.remove(i);

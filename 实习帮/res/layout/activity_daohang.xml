@@ -6,37 +6,6 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/title_bg"
-        android:gravity="center_vertical"
-        android:orientation="horizontal" >
-
-        <ImageButton
-            android:id="@+id/imbt_daohang_back"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@color/title_bg"
-            android:scaleType="fitXY"
-            android:src="@drawable/zuo"
-            android:textColor="#FFFFFF" />
-
-        <TextView
-            android:id="@+id/tv_daohang_enname"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="30dp"
-            android:background="@color/title_bg"
-            android:gravity="center_horizontal"
-            android:paddingBottom="5dp"
-            android:paddingRight="5dp"
-            android:paddingTop="5dp"
-            android:text="baidu"
-            android:textColor="#FFFFFF"
-            android:textSize="25sp" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="2" >
 
@@ -56,7 +25,7 @@
                 android:layout_height="40dp"
                 android:layout_gravity="top|right"
                 android:layout_margin="5dp"
-                android:background="@drawable/shape_edit_huise"
+                android:background="#00000000"
                 android:scaleType="fitXY"
                 android:src="@drawable/location" />
         </FrameLayout>
@@ -67,7 +36,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1.5"
+        android:layout_weight="1"
         android:orientation="vertical" >
 
         <LinearLayout
@@ -85,7 +54,6 @@
                 android:drawableLeft="@drawable/home_location"
                 android:gravity="center_vertical|left"
                 android:padding="2dp"
-                android:text="武汉市洪山区南湖李纸路湖北工业大学"
                 android:textColor="#000000" />
 
             <TextView
@@ -97,8 +65,8 @@
                 android:drawableLeft="@drawable/baogao_fasong"
                 android:gravity="center_vertical|left"
                 android:padding="2dp"
-                android:text="距离680.68km"
-                android:textColor="#808080" />
+                android:text="目前没有定位，无法获得距离，请先定位"
+                android:textColor="#BCBCBC" />
         </LinearLayout>
 
         <include layout="@layout/line" />
@@ -119,48 +87,51 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:background="#FFFFFF"
-                    android:gravity="center" >
+                    android:gravity="center"
+                    android:background="#FFFFFF" >
 
-                    <ImageButton
-                        android:id="@+id/imbt_daohang_car"
+                    <Button
+                        android:id="@+id/bt_daohang_car"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:background="#FFFFFF"
-                        android:scaleType="fitXY"
-                        android:src="@drawable/car" />
+                        android:drawableTop="@drawable/car"
+                        android:padding="2dp"
+                        android:textSize="15sp"/>
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:background="#FFFFFF"
-                    android:gravity="center" >
+                    android:gravity="center" 
+                    android:background="#FFFFFF">
 
-                    <ImageButton
-                        android:id="@+id/imbt_daohang_bus"
+                   <Button
+                        android:id="@+id/bt_daohang_bus"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:background="#FFFFFF"
-                        android:scaleType="fitXY"
-                        android:src="@drawable/bus" />
+                        android:drawableTop="@drawable/bus"
+                        android:padding="2dp"
+                        android:textSize="15sp"/>
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:background="#FFFFFF"
-                    android:gravity="center" >
+                    android:gravity="center" 
+                    android:background="#FFFFFF">
 
-                    <ImageButton
-                        android:id="@+id/imbt_daohang_walk"
+                    <Button
+                        android:id="@+id/bt_daohang_walk"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:background="#FFFFFF"
-                        android:scaleType="fitXY"
-                        android:src="@drawable/walk" />
+                        android:drawableTop="@drawable/walk"
+                         android:padding="2dp"
+                        android:textSize="15sp"/>
                 </LinearLayout>
             </LinearLayout>
 
@@ -175,10 +146,10 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
                     android:background="@drawable/shape2_blue"
-                    android:padding="5dp"
+                    android:padding="2dp"
                     android:text="导航"
                     android:textColor="#FFFFFF"
-                    android:textSize="18sp" />
+                    android:textSize="16sp" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
