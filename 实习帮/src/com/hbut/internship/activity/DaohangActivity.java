@@ -26,10 +26,7 @@ import com.baidu.mapapi.map.MyLocationData;
 import com.baidu.mapapi.model.LatLng;
 import com.baidu.mapapi.navi.BaiduMapAppNotSupportNaviException;
 import com.baidu.mapapi.navi.BaiduMapNavigation;
-import com.baidu.mapapi.navi.NaviPara;
-import com.baidu.mapapi.overlayutil.DrivingRouteOverlay;
-import com.baidu.mapapi.overlayutil.TransitRouteOverlay;
-import com.baidu.mapapi.overlayutil.WalkingRouteOverlay;
+import com.baidu.mapapi.navi.NaviParaOption;
 import com.baidu.mapapi.search.core.RouteLine;
 import com.baidu.mapapi.search.core.SearchResult;
 import com.baidu.mapapi.search.geocode.GeoCodeResult;
@@ -37,6 +34,7 @@ import com.baidu.mapapi.search.geocode.GeoCoder;
 import com.baidu.mapapi.search.geocode.OnGetGeoCoderResultListener;
 import com.baidu.mapapi.search.geocode.ReverseGeoCodeOption;
 import com.baidu.mapapi.search.geocode.ReverseGeoCodeResult;
+import com.baidu.mapapi.search.route.BikingRouteResult;
 import com.baidu.mapapi.search.route.DrivingRoutePlanOption;
 import com.baidu.mapapi.search.route.DrivingRoutePlanOption.DrivingPolicy;
 import com.baidu.mapapi.search.route.DrivingRouteResult;
@@ -50,6 +48,9 @@ import com.baidu.mapapi.search.route.WalkingRoutePlanOption;
 import com.baidu.mapapi.search.route.WalkingRouteResult;
 import com.baidu.mapapi.utils.DistanceUtil;
 import com.hbut.internship.R;
+import com.hbut.internship.baidumap.overlayutil.DrivingRouteOverlay;
+import com.hbut.internship.baidumap.overlayutil.TransitRouteOverlay;
+import com.hbut.internship.baidumap.overlayutil.WalkingRouteOverlay;
 import com.hbut.internship.util.LocationUtils;
 import com.hbut.internship.util.TimeUtils;
 import com.hbut.internship.util.ToastUtil;
@@ -66,7 +67,7 @@ import com.internship.model.Position;
 public class DaohangActivity extends BaseActivity implements OnClickListener,
 		OnGetGeoCoderResultListener, OnGetRoutePlanResultListener {
 
-	private NaviPara para;
+	private NaviParaOption paraOption;
 	private MapView mMapView;
 	private BaiduMap mBaiduMap;
 	private GeoCoder mSearch;// 反地理编码查询
@@ -305,14 +306,16 @@ public class DaohangActivity extends BaseActivity implements OnClickListener,
 			break;
 		case R.id.bt_daohang_daohang:
 			if (flag) {
-				para = new NaviPara();
-				para.startPoint = new LatLng(mLatitude, mLongtitude);
-				para.startName = "从这里开始";
-				para.endPoint = new LatLng(lat, lon);
-				para.endName = "到这里结束";
+				paraOption = new NaviParaOption();
+				LatLng latLng1=new LatLng(mLatitude, mLongtitude);
+				paraOption.startPoint(latLng1);
+				paraOption.startName("从这里开始");
+				LatLng latLng2=new LatLng(lat, lon);
+				paraOption.endPoint(latLng2) ;
+				paraOption.endName("到这里结束");
 				try {
 
-					BaiduMapNavigation.openBaiduMapNavi(para, this);
+					BaiduMapNavigation.openBaiduMapNavi(paraOption, this);
 
 				} catch (BaiduMapAppNotSupportNaviException e) {
 					e.printStackTrace();
@@ -483,5 +486,12 @@ public class DaohangActivity extends BaseActivity implements OnClickListener,
 			overlay.zoomToSpan(); // 缩放地图，使所有Overlay都在合适的视野内 注：
 									// 该方法只对Marker类型的overlay有效
 		}
+	}
+
+	//自行车路线——没有。
+	@Override
+	public void onGetBikingRouteResult(BikingRouteResult arg0) {
+		// TODO Auto-generated method stub
+		
 	}
 }
