@@ -6,7 +6,7 @@ import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.widget.ListView;
 
-/*
+/**
  * 弹性ListView
  */
 public class FlexiListView extends ListView {

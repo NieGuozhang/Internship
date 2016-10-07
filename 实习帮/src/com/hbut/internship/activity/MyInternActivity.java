@@ -10,6 +10,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -34,6 +35,7 @@ public class MyInternActivity extends BaseActivity implements OnClickListener {
 	private TextView enterprise, positionname, salary, worktime, poaddress,
 			poeducation, potype, peoplenumber, closingdate, jobdescription,
 			postate;
+	private LinearLayout ennamell, poaddressll;
 
 	private RatingBar ratingbar;
 
@@ -76,7 +78,18 @@ public class MyInternActivity extends BaseActivity implements OnClickListener {
 			e.printStackTrace();
 		}
 
-		// 初始化控件
+		findView();
+		initView();
+
+		// 监听事件
+		back.setOnClickListener(this);
+		ennamell.setOnClickListener(this);
+		poaddressll.setOnClickListener(this);
+		submit.setOnClickListener(this);// 提交按钮
+	}
+
+	private void findView() {
+
 		back = (ImageButton) findViewById(R.id.imbt_myintern_back);
 		positionname = (TextView) findViewById(R.id.tv_mi_poname);
 		enterprise = (TextView) findViewById(R.id.tv_mi_enname);
@@ -94,7 +107,12 @@ public class MyInternActivity extends BaseActivity implements OnClickListener {
 		ratingbar = (RatingBar) findViewById(R.id.mi_ratingbar);
 		submit = (Button) findViewById(R.id.bt_mi_confirm);
 
-		// 为每个控件赋值
+		ennamell = (LinearLayout) findViewById(R.id.linearLayout_myintern_enname);
+		poaddressll = (LinearLayout) findViewById(R.id.linearLayout_myintern_poaddress);
+	}
+
+	private void initView() {
+
 		positionname.setText(myinternship.getPosition().getPoName());
 		enterprise.setText(myinternship.getPosition().getEnterprise()
 				.getEnName());
@@ -114,11 +132,6 @@ public class MyInternActivity extends BaseActivity implements OnClickListener {
 		commentEditText.setText(preferences.getString("comment", ""));
 		summaryEditText.setText(preferences.getString("summary", ""));
 		ratingbar.setRating(preferences.getFloat("starValue", 0));
-
-		// 监听事件
-		back.setOnClickListener(this);
-		enterprise.setOnClickListener(this);
-		submit.setOnClickListener(this);// 提交按钮
 	}
 
 	@Override
@@ -128,13 +141,20 @@ public class MyInternActivity extends BaseActivity implements OnClickListener {
 		case R.id.imbt_myintern_back:// 退出
 			finish();
 			break;
-		case R.id.tv_mi_enname:// 查看企业信息
+		case R.id.linearLayout_myintern_enname:// 查看企业信息
 			Intent intent1 = new Intent(MyInternActivity.this,
 					EnterpriseInformationActivity.class);
 			Bundle bundle = new Bundle();
 			bundle.putSerializable("position", myinternship.getPosition());
 			intent1.putExtras(bundle);
 			startActivity(intent1);
+			break;
+		case R.id.linearLayout_myintern_poaddress:// 查看地址信息，导航
+			Intent it = new Intent(MyInternActivity.this, DaohangActivity.class);
+			Bundle bundle2 = new Bundle();
+			bundle2.putSerializable("position", myinternship.getPosition());
+			it.putExtras(bundle2);
+			startActivity(it);
 			break;
 		case R.id.bt_mi_confirm:// 提交数据至服务器
 			final String comment = commentEditText.getText().toString();// 获取评论框中的数据信息

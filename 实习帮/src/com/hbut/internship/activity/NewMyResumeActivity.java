@@ -38,7 +38,6 @@ import com.internship.model.Student;
 public class NewMyResumeActivity extends BaseActivity {
 
 	private SharedPreferences.Editor editor;
-
 	private SharedPreferences pref, preferences;
 
 	private static final int TAKE_PHOTO = 1;
@@ -49,7 +48,7 @@ public class NewMyResumeActivity extends BaseActivity {
 	private Bitmap head;
 
 	private TextView title;
-	private Button  save;
+	private Button save;
 	private ImageButton back;
 	private ImageView headpic;
 	private EditText email, phone, interest, graduatetime, honour,
@@ -73,8 +72,8 @@ public class NewMyResumeActivity extends BaseActivity {
 				ToastUtil.showToast(MyApplicationUtil.getContext(), "简历保存成功！");
 				break;
 			case 1:
-				ToastUtil
-						.showToast(MyApplicationUtil.getContext(), "简历保存失败，请重新提交！");
+				ToastUtil.showToast(MyApplicationUtil.getContext(),
+						"简历保存失败，请重新提交！");
 				break;
 			case 2:
 				editor.putString("email", mEmail);
@@ -87,8 +86,8 @@ public class NewMyResumeActivity extends BaseActivity {
 				ToastUtil.showToast(MyApplicationUtil.getContext(), "简历修改成功！");
 				break;
 			case 3:
-				ToastUtil
-						.showToast(MyApplicationUtil.getContext(), "简历修改失败，请重新提交！");
+				ToastUtil.showToast(MyApplicationUtil.getContext(),
+						"简历修改失败，请重新提交！");
 				break;
 
 			default:
@@ -103,10 +102,26 @@ public class NewMyResumeActivity extends BaseActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_newmyresume);
 
-		editor = getSharedPreferences("resume", MODE_PRIVATE).edit();
-		pref = getSharedPreferences("resume", MODE_PRIVATE);
+		editor = getSharedPreferences("Resume", MODE_PRIVATE).edit();
+		pref = getSharedPreferences("Resume", MODE_PRIVATE);
 		preferences = getSharedPreferences("Student", MODE_PRIVATE);
 
+		findView();
+		setResume();
+
+		// 返回按钮的点击事件
+		back.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				finish();
+			}
+		});
+
+	}
+
+	private void findView() {
 		// 初始化新建简历中的各个控件
 		back = (ImageButton) findViewById(R.id.imbt_newresume_back);
 		title = (TextView) findViewById(R.id.tv_writeresume);
@@ -122,19 +137,6 @@ public class NewMyResumeActivity extends BaseActivity {
 		honour = (EditText) findViewById(R.id.et_newresume_honour);
 		introduction = (EditText) findViewById(R.id.et_newresume_introduction);
 		save = (Button) findViewById(R.id.bt_newresume_save);
-
-		setResume();
-
-		// 返回按钮的点击事件
-		back.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				finish();
-			}
-		});
-
 	}
 
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -232,12 +234,12 @@ public class NewMyResumeActivity extends BaseActivity {
 	private void setResume() {
 
 		// 将每个控件之前保存的内容加载进去。
-		email.setText(pref.getString("resume", ""));
-		phone.setText(pref.getString("resume", ""));
-		interest.setText(pref.getString("resume", ""));
-		graduatetime.setText(pref.getString("resume", ""));
-		honour.setText(pref.getString("resume", ""));
-		introduction.setText(pref.getString("resume", ""));
+		email.setText(pref.getString("email", ""));
+		phone.setText(pref.getString("phone", ""));
+		interest.setText(pref.getString("interest", ""));
+		graduatetime.setText(pref.getString("graduatetime", ""));
+		honour.setText(pref.getString("honour", ""));
+		introduction.setText(pref.getString("introduction", ""));
 	}
 
 	@Override

@@ -109,7 +109,7 @@
                         android:textSize="20sp" />
                 </LinearLayout>
 
-               <include layout="@layout/line" />
+                <include layout="@layout/line" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -118,7 +118,6 @@
                 </LinearLayout>
 
                 <include layout="@layout/line" />
-
 
                 <LinearLayout
                     android:id="@+id/learLayout_enterprise"
@@ -158,11 +157,11 @@
                                 android:background="#FFFFFF"
                                 android:gravity="center"
                                 android:padding="2dp"
-                                android:text="百度"
                                 android:textColor="#000000"
                                 android:textSize="22sp"
                                 android:textStyle="normal" />
                         </LinearLayout>
+
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
@@ -227,14 +226,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
-                    android:orientation="vertical">
+                    android:orientation="vertical" >
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="5dp"
-                        android:drawableLeft="@drawable/gs"
                         android:layout_marginRight="10dp"
+                        android:drawableLeft="@drawable/gs"
                         android:drawableRight="@drawable/arrow_right"
                         android:text="实习地点:"
                         android:textColor="#A9A9A9"
@@ -244,10 +243,9 @@
                         android:id="@+id/tv_poaddress"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
                         android:gravity="left|fill_vertical"
                         android:padding="2dp"
-                        android:layout_marginLeft="10dp"
-                        android:text="湖北省武汉市洪山区湖北工业大学"
                         android:textColor="#556B2F"
                         android:textSize="15sp" />
                 </LinearLayout>
@@ -310,7 +308,6 @@
                         android:layout_marginRight="10dp"
                         android:gravity="left|center_vertical"
                         android:padding="2dp"
-                        android:text="6K"
                         android:textColor="#FFA500"
                         android:textSize="15sp" />
                 </LinearLayout>
@@ -338,7 +335,6 @@
                         android:layout_height="match_parent"
                         android:gravity="left|fill_vertical"
                         android:padding="1dp"
-                        android:text="8h"
                         android:textColor="#556B2F"
                         android:textSize="15sp" />
                 </LinearLayout>

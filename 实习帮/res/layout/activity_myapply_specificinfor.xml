@@ -75,7 +75,6 @@
                         android:layout_height="0dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="java高级工程师"
                         android:textSize="20sp" />
 
                     <TextView
@@ -85,7 +84,6 @@
                         android:layout_marginTop="10dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="百度"
                         android:textColor="#00BFFF"
                         android:textSize="20sp" />
                 </LinearLayout>

@@ -53,10 +53,12 @@ public class PositionInformationActivity extends BaseActivity implements
 				applyButton.setEnabled(false);// 申请按钮的点击事件取消
 				break;
 			case 2:
-				ToastUtil.showToast(MyApplicationUtil.getContext(), "申请失败，请重试！");
+				ToastUtil
+						.showToast(MyApplicationUtil.getContext(), "申请失败，请重试！");
 				break;
 			case 3:
-				ToastUtil.showToast(MyApplicationUtil.getContext(), "收藏失败，请重新操作！");
+				ToastUtil.showToast(MyApplicationUtil.getContext(),
+						"收藏失败，请重新操作！");
 				break;
 			case 4:
 				applyButton.setText("已实习过该职位");
@@ -138,6 +140,26 @@ public class PositionInformationActivity extends BaseActivity implements
 			e.printStackTrace();
 		}
 
+		findView();
+		initView();
+
+		back.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				finish();
+			}
+		});
+
+		applyButton.setOnClickListener(this);// 申请按钮的点击事件注册
+		collect.setOnClickListener(this);// 收藏按钮的点击事件注册
+		linearLayout.setOnClickListener(this);
+		linearLayout_address.setOnClickListener(this);// 实习地点的点击注册事件
+
+	}
+
+	private void findView() {
 		// 初始化控件
 		positionnameTextView = (TextView) findViewById(R.id.tv_poname);// 实习职位名称
 		ennameTextView = (TextView) findViewById(R.id.tv_enname);// 企业名称
@@ -155,7 +177,9 @@ public class PositionInformationActivity extends BaseActivity implements
 		collect = (ImageButton) findViewById(R.id.imbt_collect);
 		linearLayout = (LinearLayout) findViewById(R.id.learLayout_enterprise);
 		linearLayout_address = (LinearLayout) findViewById(R.id.linearLayout_poaddress);
+	}
 
+	private void initView() {
 		/*
 		 * 获取上一层界面传递下来的对象。
 		 */
@@ -179,20 +203,6 @@ public class PositionInformationActivity extends BaseActivity implements
 		closingdateTV.setText(position.getClosingdate().toString()
 				.substring(0, 10));
 		jobdesciption.setText(TextToDBCUtil.toDBC(position.getDescription()));
-
-		back.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				finish();
-			}
-		});
-
-		applyButton.setOnClickListener(this);// 申请按钮的点击事件注册
-		collect.setOnClickListener(this);// 收藏按钮的点击事件注册
-		linearLayout.setOnClickListener(this);
-		linearLayout_address.setOnClickListener(this);// 实习地点的点击注册事件
 
 	}
 
@@ -256,7 +266,8 @@ public class PositionInformationActivity extends BaseActivity implements
 											msg1.what = 1;
 											handler.sendMessage(msg1);
 											ToastUtil.showToast(
-													MyApplicationUtil.getContext(),
+													MyApplicationUtil
+															.getContext(),
 													"申请成功！");
 										} else {
 											Message msg1 = new Message();

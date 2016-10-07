@@ -18,6 +18,12 @@ import android.content.Intent;
  */
 public class SendCodeToEmailUtil {
 
+	/**
+	 * 向指定邮箱发送验证码
+	 * @param intent 上层界面传递下来的Intent，用于获取邮箱账号
+	 * @param Code 随机验证码
+	 * @throws Exception
+	 */
 	public static void sendEmail(Intent intent, String Code) throws Exception {
 		String email = intent.getStringExtra("email");
 		Properties props = new Properties();

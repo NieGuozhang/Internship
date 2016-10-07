@@ -51,7 +51,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:drawableLeft="@drawable/shouru"
+                android:drawableLeft="@drawable/salary"
                 android:gravity="center_vertical"
                 android:textColor="#FFA500"
                 android:textSize="15sp" />
