@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.Window;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -13,11 +14,15 @@ import android.widget.TabHost;
 
 import com.hbut.internship.R;
 import com.hbut.internship.broadcast.NetReceiver;
+import com.hbut.internship.util.ToastUtil;
 
 public class MainActivity extends TabActivity {
 
 	NetReceiver mReceiver = new NetReceiver();
 	IntentFilter mFilter = new IntentFilter();
+
+	private boolean isExit = false;// 用于判断连续两次按back键
+	private Handler handler = new Handler();
 
 	private TabHost tabhost;
 	private RadioGroup main_radiogroup;
@@ -81,7 +86,21 @@ public class MainActivity extends TabActivity {
 	@Override
 	public void onBackPressed() {
 		// TODO Auto-generated method stub
-		super.onBackPressed();
 		moveTaskToBack(true);
+		if (isExit) {
+			ActivityCollector.finishAll();// 退出所有的Activity，退出APP
+		} else {
+			ToastUtil.showtoast("再按一次退出");
+			isExit = true;// 两秒之内为true;
+			handler.postDelayed(new Runnable() {
+				// 两秒之后将isExit重新置为false
+
+				@Override
+				public void run() {
+					// TODO Auto-generated method stub
+					isExit = false;
+				}
+			}, 2000);
+		}
 	}
 }

@@ -3,7 +3,7 @@ package com.hbut.internship.util;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-/*
+/**
  * 根据身份证号计算年龄
  */
 public class CalculateAgeUtil {

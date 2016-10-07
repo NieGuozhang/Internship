@@ -29,7 +29,7 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.hbut.internship.R;
-import com.hbut.internship.util.MyApplication;
+import com.hbut.internship.util.MyApplicationUtil;
 import com.hbut.internship.util.ToastUtil;
 import com.hbut.internship.util.UpdataInfo;
 import com.hbut.internship.util.UpdataInfoParser;
@@ -186,7 +186,7 @@ public class MySettingsActivity extends BaseActivity {
 			super.handleMessage(msg);
 			switch (msg.what) {
 			case UPDATA_NONEED:
-				ToastUtil.showToast(MyApplication.getContext(), "不需要更新");
+				ToastUtil.showToast(MyApplicationUtil.getContext(), "不需要更新");
 			case UPDATA_CLIENT:
 				// 对话框通知用户升级程序
 				showUpdataDialog();

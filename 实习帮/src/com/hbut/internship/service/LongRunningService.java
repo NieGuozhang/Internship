@@ -6,7 +6,7 @@ import java.util.List;
 import com.hbut.internship.R;
 import com.hbut.internship.broadcast.AlarmReceiver;
 import com.hbut.internship.util.Internet;
-import com.hbut.internship.util.MyApplication;
+import com.hbut.internship.util.MyApplicationUtil;
 import com.internship.model.Apply;
 import com.internship.model.Position;
 
@@ -39,7 +39,7 @@ public class LongRunningService extends Service {
 			NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
 			Notification notification = new Notification(R.drawable.icon,
 					"你的申请状态更新啦！", System.currentTimeMillis());
-			notification.setLatestEventInfo(MyApplication.getContext(), poname
+			notification.setLatestEventInfo(MyApplicationUtil.getContext(), poname
 					+ "申请状态更新啦！", "你申请的" + poname + "这个职位状态已更新，请及时查看", null);
 			manager.notify(1, notification);
 

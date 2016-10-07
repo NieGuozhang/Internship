@@ -22,7 +22,7 @@ public class ToastUtil {
 
 	public static void showtoast(String content) {
 		if (toast == null) {
-			toast = Toast.makeText(MyApplication.getContext(), content,
+			toast = Toast.makeText(MyApplicationUtil.getContext(), content,
 					Toast.LENGTH_SHORT);
 		} else {
 			toast.setText(content);

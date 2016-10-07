@@ -9,7 +9,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 
 import com.hbut.internship.R;
-import com.hbut.internship.util.MyApplication;
+import com.hbut.internship.util.MyApplicationUtil;
 import com.hbut.internship.util.ToastUtil;
 
 public class ForgetPassword1Activity extends BaseActivity {
@@ -47,7 +47,7 @@ public class ForgetPassword1Activity extends BaseActivity {
 				// TODO Auto-generated method stub
 				final String email = inputaccount.getText().toString();
 				if (email.equals("")) {
-					ToastUtil.showToast(MyApplication.getContext(),
+					ToastUtil.showToast(MyApplicationUtil.getContext(),
 							"你输入的邮箱账号为空！请重新输入！");// 邮箱为空，提示重新输入。
 				} else if (checkEmail(email)) {
 					Intent intent = new Intent(ForgetPassword1Activity.this,
@@ -55,7 +55,7 @@ public class ForgetPassword1Activity extends BaseActivity {
 					intent.putExtra("email", email);
 					startActivity(intent);
 				} else {
-					ToastUtil.showToast(MyApplication.getContext(),
+					ToastUtil.showToast(MyApplicationUtil.getContext(),
 							"你输入的邮箱格式不正确，请重新输入！");
 				}
 			}

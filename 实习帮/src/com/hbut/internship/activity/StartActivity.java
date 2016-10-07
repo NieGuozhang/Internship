@@ -3,6 +3,7 @@ package com.hbut.internship.activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.KeyEvent;
@@ -10,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.hbut.internship.R;
 import com.hbut.internship.util.NetWorkUtil;
@@ -24,22 +26,23 @@ import com.hbut.internship.util.ToastUtil;
 public class StartActivity extends BaseActivity {
 
 	// 创建handler对象
-	private Handler handler;
+	private Handler handler = new Handler();
 	// 创建接口Runnable
 	private Runnable updateThread;
 	private Dialog dialog;
 
-	
+	private TextView appname;
+	private Typeface tf;// 修改APP名字的字体
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_start);
 
-		
-
-		// 创建handler对象
-		handler = new Handler();
+		appname = (TextView) findViewById(R.id.tv_start_appname);
+		tf = Typeface.createFromAsset(getAssets(), "fonts/huawenxingkai.ttf");
+		appname.setTypeface(tf);// 设置APP的名字的字体为“华文行楷”
 
 		// 创建接口Runnable 线程
 		updateThread = new Runnable() {
@@ -47,14 +50,12 @@ public class StartActivity extends BaseActivity {
 				if (!NetWorkUtil.checkNetState(StartActivity.this)) {
 					netDialog(StartActivity.this, R.layout.net_dialog);
 					ToastUtil.showtoast("网络未连接，请检查网络");
-
 				} else {
 					Intent intent = new Intent(StartActivity.this,
 							LoginActivity.class);
 					// 要跳转的界面
 					startActivity(intent);
-					StartActivity.this.finish();
-
+					finish();
 				}
 				// 判断sdk版本，大于5才能用
 				int version = Integer.valueOf(android.os.Build.VERSION.SDK);
@@ -65,9 +66,7 @@ public class StartActivity extends BaseActivity {
 					overridePendingTransition(R.anim.in, R.anim.out);
 					// 执行handler的postdelayed，放到线程中
 				}
-
 			}
-
 		};
 		handler.postDelayed(updateThread, 3000);
 
@@ -102,16 +101,13 @@ public class StartActivity extends BaseActivity {
 		dialog.setCanceledOnTouchOutside(false);
 		dialog.show();
 		return dialog;
-
 	}
 
 	// 按两次返回键退出
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		if (keyCode == KeyEvent.KEYCODE_BACK) {
-			dialog.dismiss();
 			StartActivity.this.finish();
 			System.exit(0);
-
 			return true;
 		}
 		return super.onKeyDown(keyCode, event);

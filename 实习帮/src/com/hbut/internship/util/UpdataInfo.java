@@ -1,6 +1,6 @@
 package com.hbut.internship.util;
 
-/*
+/**
  * 版本信息
  */
 public class UpdataInfo {

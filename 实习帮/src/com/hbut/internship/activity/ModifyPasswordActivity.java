@@ -13,7 +13,7 @@ import android.widget.ImageButton;
 
 import com.hbut.internship.R;
 import com.hbut.internship.util.Internet;
-import com.hbut.internship.util.MyApplication;
+import com.hbut.internship.util.MyApplicationUtil;
 import com.hbut.internship.util.ToastUtil;
 
 public class ModifyPasswordActivity extends BaseActivity implements
@@ -32,10 +32,10 @@ public class ModifyPasswordActivity extends BaseActivity implements
 		public void handleMessage(Message msg) {
 			switch (msg.what) {
 			case 0:
-				ToastUtil.showToast(MyApplication.getContext(), "密码修改成功！");
+				ToastUtil.showToast(MyApplicationUtil.getContext(), "密码修改成功！");
 				break;
 			case 1:
-				ToastUtil.showToast(MyApplication.getContext(), "修改失败，请重新操作！");
+				ToastUtil.showToast(MyApplicationUtil.getContext(), "修改失败，请重新操作！");
 				break;
 			default:
 				break;

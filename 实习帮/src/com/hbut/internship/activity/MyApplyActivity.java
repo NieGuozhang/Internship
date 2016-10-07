@@ -20,7 +20,7 @@ import android.widget.ImageButton;
 import com.hbut.internship.R;
 import com.hbut.internship.adapter.MyApplyAdapter;
 import com.hbut.internship.util.Internet;
-import com.hbut.internship.util.MyApplication;
+import com.hbut.internship.util.MyApplicationUtil;
 import com.hbut.internship.util.ToastUtil;
 import com.hbut.internship.view.SwipeMenu;
 import com.hbut.internship.view.SwipeMenuCreator;
@@ -45,7 +45,7 @@ public class MyApplyActivity extends BaseActivity {
 			mList.remove(msg.what);
 			adapter.notifyDataSetChanged();
 			mListView.invalidate();
-			ToastUtil.showToast(MyApplication.getContext(), "撤销申请成功！");
+			ToastUtil.showToast(MyApplicationUtil.getContext(), "撤销申请成功！");
 		};
 	};
 
@@ -53,7 +53,7 @@ public class MyApplyActivity extends BaseActivity {
 		public void handleMessage(Message msg) {
 			switch (msg.what) {
 			case 0:
-				ToastUtil.showToast(MyApplication.getContext(), "撤销申请失败！");
+				ToastUtil.showToast(MyApplicationUtil.getContext(), "撤销申请失败！");
 				break;
 			default:
 				break;

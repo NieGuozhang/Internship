@@ -12,10 +12,10 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.hbut.internship.R;
-import com.hbut.internship.util.IdentifyingCode;
+import com.hbut.internship.util.IdentifyingCodeUtil;
 import com.hbut.internship.util.Internet;
-import com.hbut.internship.util.MyApplication;
-import com.hbut.internship.util.SendCodeToEmail;
+import com.hbut.internship.util.MyApplicationUtil;
+import com.hbut.internship.util.SendCodeToEmailUtil;
 import com.hbut.internship.util.ToastUtil;
 import com.hbut.internship.view.CountDownTimerUtils;
 
@@ -35,11 +35,11 @@ public class ForgetPassword2Activity extends BaseActivity implements
 		public void handleMessage(Message msg) {
 			switch (msg.what) {
 			case 0:
-				ToastUtil.showToast(MyApplication.getContext(), "密码修改成功!");
+				ToastUtil.showToast(MyApplicationUtil.getContext(), "密码修改成功!");
 				finish();
 				break;
 			case 1:
-				ToastUtil.showToast(MyApplication.getContext(),
+				ToastUtil.showToast(MyApplicationUtil.getContext(),
 						"您输入的邮箱不存在！请重新操作。");
 				break;
 			default:
@@ -94,8 +94,8 @@ public class ForgetPassword2Activity extends BaseActivity implements
 				public void run() {
 					// TODO Auto-generated method stub
 					try {
-						Code = IdentifyingCode.getInstance().createCode();
-						SendCodeToEmail.sendEmail(getIntent(), Code);
+						Code = IdentifyingCodeUtil.getInstance().createCode();
+						SendCodeToEmailUtil.sendEmail(getIntent(), Code);
 					} catch (Exception e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -112,12 +112,12 @@ public class ForgetPassword2Activity extends BaseActivity implements
 			final String code = inputVFcode.getText().toString();// 获取编辑框中输入的验证码。
 
 			if (!newpwd.equals(newpwd1)) {// 新密码不同，。提醒用户从新输入新密码。
-				ToastUtil.showToast(MyApplication.getContext(),
+				ToastUtil.showToast(MyApplicationUtil.getContext(),
 						"您两次输入的新密码不一致，请重新输入新密码！");
 			} else {// 若两次输入的新密码相同，可以将新密码保存至后台
 				if (!Code.equalsIgnoreCase(code)) {
 
-					ToastUtil.showToast(MyApplication.getContext(),
+					ToastUtil.showToast(MyApplicationUtil.getContext(),
 							"您输入的验证码不对，修改密码失败！");
 				} else {
 					new Thread(new Runnable() {

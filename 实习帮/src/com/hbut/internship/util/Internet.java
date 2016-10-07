@@ -23,8 +23,8 @@ import android.net.ConnectivityManager;
 import android.app.Activity;
 import android.content.Context;
 
-/*
- * 连接服务器。
+/**
+ * 连接服务器，获取数据。
  */
 public class Internet extends Activity {
 

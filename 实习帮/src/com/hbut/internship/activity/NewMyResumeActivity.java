@@ -30,7 +30,7 @@ import android.widget.TextView;
 
 import com.hbut.internship.R;
 import com.hbut.internship.util.Internet;
-import com.hbut.internship.util.MyApplication;
+import com.hbut.internship.util.MyApplicationUtil;
 import com.hbut.internship.util.ToastUtil;
 import com.internship.model.CV;
 import com.internship.model.Student;
@@ -70,11 +70,11 @@ public class NewMyResumeActivity extends BaseActivity {
 				editor.putString("honour", mHonour);
 				editor.putString("introduction", mIntroduction);
 				editor.commit();
-				ToastUtil.showToast(MyApplication.getContext(), "简历保存成功！");
+				ToastUtil.showToast(MyApplicationUtil.getContext(), "简历保存成功！");
 				break;
 			case 1:
 				ToastUtil
-						.showToast(MyApplication.getContext(), "简历保存失败，请重新提交！");
+						.showToast(MyApplicationUtil.getContext(), "简历保存失败，请重新提交！");
 				break;
 			case 2:
 				editor.putString("email", mEmail);
@@ -84,11 +84,11 @@ public class NewMyResumeActivity extends BaseActivity {
 				editor.putString("honour", mHonour);
 				editor.putString("introduction", mIntroduction);
 				editor.commit();
-				ToastUtil.showToast(MyApplication.getContext(), "简历修改成功！");
+				ToastUtil.showToast(MyApplicationUtil.getContext(), "简历修改成功！");
 				break;
 			case 3:
 				ToastUtil
-						.showToast(MyApplication.getContext(), "简历修改失败，请重新提交！");
+						.showToast(MyApplicationUtil.getContext(), "简历修改失败，请重新提交！");
 				break;
 
 			default:
@@ -255,7 +255,7 @@ public class NewMyResumeActivity extends BaseActivity {
 				if (mEmail.equals("") || mPhone.equals("")
 						|| mInterest.equals("") || mGraduatetime.equals("")
 						|| mHonour.equals("") || mIntroduction.equals("")) {
-					ToastUtil.showToast(MyApplication.getContext(),
+					ToastUtil.showToast(MyApplicationUtil.getContext(),
 							"请将简历填写完整后再提交！");
 				} else {
 					cv.setEmail(mEmail);

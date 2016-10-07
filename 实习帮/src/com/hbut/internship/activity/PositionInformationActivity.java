@@ -16,7 +16,7 @@ import android.widget.TextView;
 
 import com.hbut.internship.R;
 import com.hbut.internship.util.Internet;
-import com.hbut.internship.util.MyApplication;
+import com.hbut.internship.util.MyApplicationUtil;
 import com.hbut.internship.util.TextToDBCUtil;
 import com.hbut.internship.util.ToastUtil;
 import com.internship.model.Apply;
@@ -53,10 +53,10 @@ public class PositionInformationActivity extends BaseActivity implements
 				applyButton.setEnabled(false);// 申请按钮的点击事件取消
 				break;
 			case 2:
-				ToastUtil.showToast(MyApplication.getContext(), "申请失败，请重试！");
+				ToastUtil.showToast(MyApplicationUtil.getContext(), "申请失败，请重试！");
 				break;
 			case 3:
-				ToastUtil.showToast(MyApplication.getContext(), "收藏失败，请重新操作！");
+				ToastUtil.showToast(MyApplicationUtil.getContext(), "收藏失败，请重新操作！");
 				break;
 			case 4:
 				applyButton.setText("已实习过该职位");
@@ -213,7 +213,7 @@ public class PositionInformationActivity extends BaseActivity implements
 							Message msg = new Message();
 							msg.what = 0;
 							handler.sendMessage(msg);
-							ToastUtil.showToast(MyApplication.getContext(),
+							ToastUtil.showToast(MyApplicationUtil.getContext(),
 									"收藏成功！");
 						} else {
 							Message msg = new Message();
@@ -256,7 +256,7 @@ public class PositionInformationActivity extends BaseActivity implements
 											msg1.what = 1;
 											handler.sendMessage(msg1);
 											ToastUtil.showToast(
-													MyApplication.getContext(),
+													MyApplicationUtil.getContext(),
 													"申请成功！");
 										} else {
 											Message msg1 = new Message();

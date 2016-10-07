@@ -5,12 +5,12 @@ import java.io.ByteArrayOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
-/*
+/**
  *对象和Byte[]之间的转化，方便存取对象。
  */
 public class ObjectAndByteUtil {
 
-	/*
+	/**
 	 * 将字节转换为对象
 	 */
 	public static Object ByteToObject(byte[] bytes) {
@@ -27,7 +27,7 @@ public class ObjectAndByteUtil {
 		return obj;
 	}
 
-	/*
+	/**
 	 * 将对象转换为字节
 	 */
 	public static byte[] ObjectToByte(java.lang.Object obj) {

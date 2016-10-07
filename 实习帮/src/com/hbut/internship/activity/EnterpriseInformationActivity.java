@@ -14,7 +14,7 @@ import android.widget.TextView;
 import com.hbut.internship.R;
 import com.hbut.internship.adapter.ReviewCommentAdapter;
 import com.hbut.internship.util.Internet;
-import com.hbut.internship.util.MyApplication;
+import com.hbut.internship.util.MyApplicationUtil;
 import com.hbut.internship.util.TextToDBCUtil;
 import com.hbut.internship.view.ListViewRelayout;
 import com.internship.model.Apply;
@@ -88,7 +88,7 @@ public class EnterpriseInformationActivity extends BaseActivity implements
 		enTro.setText(TextToDBCUtil
 				.toDBC(position.getEnterprise().getEnIntro()));// 企业简介
 
-		adapter = new ReviewCommentAdapter(MyApplication.getContext(),
+		adapter = new ReviewCommentAdapter(MyApplicationUtil.getContext(),
 				R.layout.commentlistview_item, commentList);
 		comment.setAdapter(adapter);
 		ListViewRelayout.setListViewHeightBasedOnChildren(comment);

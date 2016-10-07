@@ -19,7 +19,7 @@ import android.widget.TextView;
 
 import com.hbut.internship.R;
 import com.hbut.internship.util.Internet;
-import com.hbut.internship.util.MyApplication;
+import com.hbut.internship.util.MyApplicationUtil;
 import com.hbut.internship.util.ObjectAndByteUtil;
 import com.hbut.internship.util.ToastUtil;
 import com.internship.model.Apply;
@@ -49,7 +49,7 @@ public class MyApplySpecificInfoActivity extends BaseActivity implements
 				revokeintern.setVisibility(View.VISIBLE);
 				revokeintern.setEnabled(true);
 				status.setText("正在实习");
-				ToastUtil.showToast(MyApplication.getContext(), "设置实习成功！");
+				ToastUtil.showToast(MyApplicationUtil.getContext(), "设置实习成功！");
 				break;
 			case 1:// 该职位撤销成功
 				revokeintern.setVisibility(View.GONE);
@@ -57,7 +57,7 @@ public class MyApplySpecificInfoActivity extends BaseActivity implements
 				setinternship.setEnabled(true);
 				setinternship.setText("设为实习");
 				status.setText("审核通过");
-				ToastUtil.showToast(MyApplication.getContext(), "撤销实习成功！");
+				ToastUtil.showToast(MyApplicationUtil.getContext(), "撤销实习成功！");
 				break;
 			default:
 				break;
@@ -218,7 +218,7 @@ public class MyApplySpecificInfoActivity extends BaseActivity implements
 											handler.sendMessage(msg);
 										} else {
 											ToastUtil.showToast(
-													MyApplication.getContext(),
+													MyApplicationUtil.getContext(),
 													"设置失败，请重试！");
 										}
 									} catch (Exception e) {
@@ -266,7 +266,7 @@ public class MyApplySpecificInfoActivity extends BaseActivity implements
 											handler.sendMessage(msg);
 										} else {
 											ToastUtil.showToast(
-													MyApplication.getContext(),
+													MyApplicationUtil.getContext(),
 													"撤销成功");
 										}
 									} catch (Exception e) {

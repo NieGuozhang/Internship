@@ -16,7 +16,7 @@ import android.widget.TextView;
 
 import com.hbut.internship.R;
 import com.hbut.internship.util.Internet;
-import com.hbut.internship.util.MyApplication;
+import com.hbut.internship.util.MyApplicationUtil;
 import com.hbut.internship.util.TextToDBCUtil;
 import com.hbut.internship.util.ToastUtil;
 import com.internship.model.CV;
@@ -42,12 +42,12 @@ public class MyResumeActivity extends BaseActivity {
 		public void handleMessage(Message msg) {
 			switch (msg.what) {
 			case 0:
-				ToastUtil.showToast(MyApplication.getContext(), "简历删除成功！");
+				ToastUtil.showToast(MyApplicationUtil.getContext(), "简历删除成功！");
 				finish();
 				break;
 			case 1:
 				ToastUtil
-						.showToast(MyApplication.getContext(), "删除简历失败，请重新操作！");
+						.showToast(MyApplicationUtil.getContext(), "删除简历失败，请重新操作！");
 				break;
 			default:
 				break;

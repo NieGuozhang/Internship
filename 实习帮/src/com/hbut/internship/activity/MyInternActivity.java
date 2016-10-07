@@ -16,7 +16,7 @@ import android.widget.Toast;
 
 import com.hbut.internship.R;
 import com.hbut.internship.util.Internet;
-import com.hbut.internship.util.MyApplication;
+import com.hbut.internship.util.MyApplicationUtil;
 import com.hbut.internship.util.TextToDBCUtil;
 import com.hbut.internship.util.ToastUtil;
 import com.internship.model.Apply;
@@ -154,7 +154,7 @@ public class MyInternActivity extends BaseActivity implements OnClickListener {
 								myinternship.getApplyId(), starValue, comment,
 								summary)) {
 
-							ToastUtil.showToast(MyApplication.getContext(),
+							ToastUtil.showToast(MyApplicationUtil.getContext(),
 									"提交成功！");
 						} else {
 							Message msg = new Message();

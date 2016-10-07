@@ -13,7 +13,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Point;
 import android.graphics.drawable.BitmapDrawable;
 
-/*
+/**
  * 图片缩放工具
  */
 public class PictureUtils {
@@ -85,9 +85,13 @@ public class PictureUtils {
 		return bitmap;
 	}
 	
-	//本地int转Bitmap 
+	/**
+	 * 本地int转Bitmap 
+	 * @param photoID
+	 * @return
+	 */
 	public static Bitmap IntToBitmap(int photoID){
-		Resources r = MyApplication.getContext().getResources();
+		Resources r = MyApplicationUtil.getContext().getResources();
 		InputStream is = r.openRawResource(photoID);
 		BitmapDrawable bmpDraw = new BitmapDrawable(is);
 		Bitmap bmp = bmpDraw.getBitmap();

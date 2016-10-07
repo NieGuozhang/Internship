@@ -8,7 +8,7 @@ import org.xmlpull.v1.XmlPullParser;
 import android.util.Xml;
 
 
-/*
+/**
  * 
  * 版本更新
  */
