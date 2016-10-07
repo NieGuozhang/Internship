@@ -84,6 +84,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:gravity="center_vertical|left"
+                    android:drawableLeft="@drawable/entype"
                     android:paddingLeft="5dp"
                     android:text="企业类型："
                     android:textColor="#A9A9A9" />
@@ -109,11 +110,12 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:drawableLeft="@drawable/people"
+                    android:drawableLeft="@drawable/lianxiren"
                     android:gravity="center_vertical|left"
                     android:paddingLeft="5dp"
                     android:text="企业联系人："
                     android:textColor="#A9A9A9" />
+                
 
                 <TextView
                     android:id="@+id/tv_enhandler"
@@ -124,6 +126,7 @@
                     android:textColor="#556B2F"
                     android:textSize="20sp" />
             </LinearLayout>
+            <include layout="@layout/line"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -135,7 +138,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:drawableLeft="@drawable/telephone"
+                    android:drawableLeft="@drawable/lianxidianhua"
                     android:gravity="center_vertical|left"
                     android:paddingLeft="5dp"
                     android:text="联系方式："
@@ -162,7 +165,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:drawableLeft="@drawable/daohang"
+                    android:drawableLeft="@drawable/home_location"
                     android:gravity="center_vertical|left"
                     android:paddingLeft="5dp"
                     android:text="企业地址："
@@ -189,9 +192,9 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:drawableLeft="@drawable/renzheng"
+                    android:drawableLeft="@drawable/qiyejianjie"
                     android:gravity="center_vertical|left"
-                    android:paddingLeft="5dp"
+                    android:padding="5dp"
                     android:text="企业简介："
                     android:textColor="#A9A9A9" />
 
@@ -215,6 +218,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
+                    android:drawableLeft="@drawable/pinglun"
                     android:gravity="center_vertical|left"
                     android:padding="5dp"
                     android:text="企业职位评论："

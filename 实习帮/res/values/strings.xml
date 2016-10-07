@@ -11,4 +11,11 @@
     <string name="updated_at">上次更新于%1$s前</string>  
     <string name="updated_just_now">刚刚更新</string>  
     <string name="time_error">时间有问题</string> 
+    
+    <string name="loading">  加载中请稍后...</string>
+    <string name="prompt">提示</string>
+    <string name="prompt_net">网络异常</string>
+    <string name="promptcontent">无法连接到网络，请检查网络设置</string>
+    <string name="quit_content">退出</string>
+    <string name="network_settings">网络设置</string>
 </resources>

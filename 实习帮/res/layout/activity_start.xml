@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    android:gravity="center_horizontal"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="30dp" >
+
+        <ImageView
+            android:layout_width="90dp"
+            android:layout_height="90dp"
+            android:background="@drawable/shape_circle_blue"
+            android:scaleType="fitXY"
+            android:src="@drawable/icon" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/tv_start_appname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="实习帮"
+            android:textColor="@color/title_bg"
+            android:textSize="32sp" />
+
+        <TextView
+            android:id="@+id/tv_start_intro"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="专注在校生的实习机会"
+            android:textColor="#808080"
+            android:textSize="15sp" />
+    </LinearLayout>
+
+</LinearLayout>

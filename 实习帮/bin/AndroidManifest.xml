@@ -54,7 +54,7 @@
             android:value="gWEIekb5WYdGIEvyCI6T6MMN3l5gLMTt" />
 
         <activity
-            android:name="com.hbut.internship.activity.LoginActivity"
+            android:name="com.hbut.internship.activity.StartActivity"
             android:alwaysRetainTaskState="true"
             android:theme="@android:style/Theme.Light.NoTitleBar" >
             <intent-filter>
@@ -62,6 +62,11 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name="com.hbut.internship.activity.LoginActivity"
+            android:alwaysRetainTaskState="true"
+            android:theme="@android:style/Theme.Light.NoTitleBar" >
         </activity>
         <activity android:name="com.hbut.internship.activity.MainActivity" >
         </activity>

@@ -101,7 +101,7 @@ public class DaohangActivity extends BaseActivity implements OnClickListener,
 	private Position position;
 
 	private String ecity;// 实习地点城市。
-	private double juli;
+	private double juli;// 实习点和定位点的之间的距离
 	private DecimalFormat df = new DecimalFormat("#.00");// 将double数只保留两位小数。
 
 	@Override
@@ -170,10 +170,11 @@ public class DaohangActivity extends BaseActivity implements OnClickListener,
 		mLocationClient.registerLocationListener(mLocationListener);
 
 		LocationClientOption option = new LocationClientOption();
-		option.setCoorType("bd09ll");
-		option.setIsNeedAddress(true);
-		option.setOpenGps(true);
-		option.setScanSpan(1000);
+		option.setCoorType("bd09ll");// 返回的定位结果是百度经纬度
+		option.setIsNeedAddress(true);// 位置
+		option.setOpenGps(true);// 打开GPS
+		option.setLocationMode(LocationClientOption.LocationMode.Hight_Accuracy);// 定位模式——高精度
+		option.setScanSpan(1000);// 多长时间进行一次请求
 		mLocationClient.setLocOption(option);
 		// 初始化图标
 		mIconLocation = BitmapDescriptorFactory
@@ -250,12 +251,6 @@ public class DaohangActivity extends BaseActivity implements OnClickListener,
 			LocationUtils.centerToMyLocation(mBaiduMap, mLatitude, mLongtitude);
 			break;
 
-		/**
-		 * 步行1分钟 0.06公里 驾车1分钟 0.55公里 公交1分钟 0.15公里
-		 * 
-		 * @param minute
-		 * @return
-		 */
 		case R.id.bt_daohang_car:// 驾车路线
 			if (flag) {
 				// 重置浏览节点的路线数据
@@ -265,8 +260,6 @@ public class DaohangActivity extends BaseActivity implements OnClickListener,
 				routePlanSearch.drivingSearch((new DrivingRoutePlanOption())
 						.from(stNode).to(enNode)
 						.policy(DrivingPolicy.ECAR_DIS_FIRST));// 距离优先
-				int cartime = (int) (juli / (1000 * 0.55));
-				car.setText(TimeUtils.timeFormatter(cartime));
 			} else {
 				ToastUtil.showtoast("抱歉，请先定位");
 			}
@@ -280,12 +273,6 @@ public class DaohangActivity extends BaseActivity implements OnClickListener,
 				routePlanSearch.transitSearch((new TransitRoutePlanOption())
 						.from(stNode).city(ecity).to(enNode)
 						.policy(TransitPolicy.EBUS_WALK_FIRST));// 少步行
-				if (route == null) {
-					bus.setText("无");
-				} else {
-					int bustime = (int) (juli / (1000 * 0.15));
-					bus.setText(TimeUtils.timeFormatter(bustime));
-				}
 			} else {
 				ToastUtil.showtoast("抱歉，请先定位");
 			}
@@ -298,8 +285,6 @@ public class DaohangActivity extends BaseActivity implements OnClickListener,
 				mBaiduMap.clear();
 				routePlanSearch.walkingSearch((new WalkingRoutePlanOption())
 						.from(stNode).to(enNode));
-				int walktime = (int) (juli / (1000 * 0.06));
-				walk.setText(TimeUtils.timeFormatter(walktime));
 			} else {
 				ToastUtil.showtoast("抱歉，请先定位");
 			}
@@ -307,11 +292,11 @@ public class DaohangActivity extends BaseActivity implements OnClickListener,
 		case R.id.bt_daohang_daohang:
 			if (flag) {
 				paraOption = new NaviParaOption();
-				LatLng latLng1=new LatLng(mLatitude, mLongtitude);
+				LatLng latLng1 = new LatLng(mLatitude, mLongtitude);
 				paraOption.startPoint(latLng1);
 				paraOption.startName("从这里开始");
-				LatLng latLng2=new LatLng(lat, lon);
-				paraOption.endPoint(latLng2) ;
+				LatLng latLng2 = new LatLng(lat, lon);
+				paraOption.endPoint(latLng2);
 				paraOption.endName("到这里结束");
 				try {
 
@@ -344,7 +329,7 @@ public class DaohangActivity extends BaseActivity implements OnClickListener,
 
 			MyLocationData data = new MyLocationData.Builder()//
 					.direction(mCurrentX)//
-					.accuracy(location.getRadius())//
+					.accuracy(location.getRadius())// 误差半径
 					.latitude(location.getLatitude())//
 					.longitude(location.getLongitude())//
 					.build();
@@ -407,7 +392,12 @@ public class DaohangActivity extends BaseActivity implements OnClickListener,
 	}
 
 	/**
-	 * 路线规划监听器
+	 * 路线规划监听器 
+	 * 
+	 * 步行1分钟 0.06公里 驾车1分钟 0.55公里 公交1分钟 0.15公里
+	 * 
+	 * @param minute
+	 * @return
 	 */
 	// 驾车路线规划
 	@Override
@@ -432,6 +422,8 @@ public class DaohangActivity extends BaseActivity implements OnClickListener,
 			overlay.addToMap(); // 将所有Overlay 添加到地图上
 			overlay.zoomToSpan(); // 缩放地图，使所有Overlay都在合适的视野内 注：
 									// 该方法只对Marker类型的overlay有效
+			int cartime = (int) (juli / (1000 * 0.55));
+			car.setText(TimeUtils.timeFormatter(cartime));
 		}
 
 	}
@@ -441,6 +433,7 @@ public class DaohangActivity extends BaseActivity implements OnClickListener,
 	public void onGetTransitRouteResult(TransitRouteResult result) {
 		// TODO Auto-generated method stub
 		if (result == null || result.error != SearchResult.ERRORNO.NO_ERROR) {
+			bus.setText("无");
 			Toast.makeText(DaohangActivity.this, "抱歉，未找到结果", Toast.LENGTH_SHORT)
 					.show();
 		}
@@ -460,8 +453,12 @@ public class DaohangActivity extends BaseActivity implements OnClickListener,
 			overlay.addToMap(); // 将所有Overlay 添加到地图上
 			overlay.zoomToSpan(); // 缩放地图，使所有Overlay都在合适的视野内 注：
 									// 该方法只对Marker类型的overlay有效
+
+			int bustime = (int) (juli / (1000 * 0.15));
+			bus.setText(TimeUtils.timeFormatter(bustime));
 		}
 	}
+
 	// 步行路线规划
 	@Override
 	public void onGetWalkingRouteResult(WalkingRouteResult result) {
@@ -485,13 +482,15 @@ public class DaohangActivity extends BaseActivity implements OnClickListener,
 			overlay.addToMap(); // 将所有Overlay 添加到地图上
 			overlay.zoomToSpan(); // 缩放地图，使所有Overlay都在合适的视野内 注：
 									// 该方法只对Marker类型的overlay有效
+			int walktime = (int) (juli / (1000 * 0.06));
+			walk.setText(TimeUtils.timeFormatter(walktime));
 		}
 	}
 
-	//自行车路线——没有。
+	// 自行车路线——没有。
 	@Override
 	public void onGetBikingRouteResult(BikingRouteResult arg0) {
 		// TODO Auto-generated method stub
-		
+
 	}
 }
