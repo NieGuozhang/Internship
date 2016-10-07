@@ -6,7 +6,7 @@
     android:background="#FFFFFF"
     android:orientation="vertical" >
 
-   <LinearLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/title_bg"
@@ -47,9 +47,9 @@
             android:id="@+id/spinner_fitername"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"
             android:layout_gravity="bottom"
-            android:gravity="center"/>
+            android:layout_weight="1"
+            android:gravity="center" />
 
         <EditText
             android:id="@+id/et_searchinternship"
@@ -59,6 +59,7 @@
             android:background="@drawable/shape_edit_white"
             android:hint="请输入企业、实习名称"
             android:textSize="15sp" />
+
         <Button
             android:id="@+id/bt_findinternship_search"
             android:layout_width="0dp"
@@ -72,50 +73,56 @@
             android:textColor="#FFFFFF"
             android:textSize="15sp" />
     </LinearLayout>
-    
-    <include layout="@layout/line"/>
-    
-    <LinearLayout 
+
+    <include layout="@layout/line" />
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center_vertical">
-        <LinearLayout 
+        android:gravity="center_vertical"
+        android:orientation="horizontal" >
+
+        <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="4"
-            android:gravity="center">
-            <TextView 
+            android:gravity="center" >
+
+            <TextView
                 android:id="@+id/tv_searchresultnumber"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:drawableRight="@drawable/fiternum"
                 android:gravity="left|center_vertical"
                 android:paddingLeft="10dp"
-                android:layout_margin="5dp"
                 android:text="共有10条结果"
-                android:textSize="18sp"
-                android:drawableRight="@drawable/fiternum"/>
+                android:textSize="18sp" />
         </LinearLayout>
-        <LinearLayout 
+
+        <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1.5"
-            android:gravity="center_vertical|right">
-            <Button 
-                android:layout_margin="5dp"
-                android:padding="5dp"
+            android:gravity="center_vertical|right" >
+
+            <Button
                 android:id="@+id/bt_searchposition_fiter"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="筛选"
-                android:gravity="center"
-                android:textSize="18sp"
-                android:textColor="#FFFFFF"
+                android:layout_margin="5dp"
+                android:background="@drawable/btbg_red"
                 android:drawableRight="@drawable/shaixuan"
-                android:background="@drawable/btbg_red"/>
+                android:gravity="center"
+                android:padding="5dp"
+                android:text="筛选"
+                android:textColor="#FFFFFF"
+                android:textSize="18sp" />
         </LinearLayout>
     </LinearLayout>
-    <include layout="@layout/line"/>
+
+    <include layout="@layout/line" />
+
     <ListView
         android:id="@+id/lv_jobfilter"
         android:layout_width="match_parent"
@@ -123,5 +130,12 @@
         android:padding="5dp"
         android:scrollbars="none" >
     </ListView>
+
+    <View
+        android:id="@+id/main_darkview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/dark_bg"
+        android:visibility="gone" />
 
 </LinearLayout>

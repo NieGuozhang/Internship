@@ -11,7 +11,7 @@ import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.Window;
 
-/*
+/**
  * 自定义一个Activity，所有的Activity都继承这个activity，方便管理。
  */
 public class BaseActivity extends Activity {

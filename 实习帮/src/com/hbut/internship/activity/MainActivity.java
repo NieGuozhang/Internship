@@ -2,6 +2,8 @@ package com.hbut.internship.activity;
 
 import android.app.TabActivity;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.view.Window;
 import android.widget.RadioButton;
@@ -10,8 +12,13 @@ import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.TabHost;
 
 import com.hbut.internship.R;
+import com.hbut.internship.broadcast.NetReceiver;
 
 public class MainActivity extends TabActivity {
+
+	NetReceiver mReceiver = new NetReceiver();
+	IntentFilter mFilter = new IntentFilter();
+
 	private TabHost tabhost;
 	private RadioGroup main_radiogroup;
 	private RadioButton schoolrecommend, myinternship, findinternship;
@@ -22,6 +29,9 @@ public class MainActivity extends TabActivity {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.tabhost);
 		ActivityCollector.addActivity(this);
+
+		mFilter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
+		registerReceiver(mReceiver, mFilter);
 
 		main_radiogroup = (RadioGroup) findViewById(R.id.main_radiogroup);
 
@@ -64,9 +74,10 @@ public class MainActivity extends TabActivity {
 	protected void onDestroy() {
 		// TODO Auto-generated method stub
 		super.onDestroy();
+		unregisterReceiver(mReceiver);
 		ActivityCollector.removeActivity(this);
 	}
-	
+
 	@Override
 	public void onBackPressed() {
 		// TODO Auto-generated method stub

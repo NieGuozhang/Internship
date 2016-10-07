@@ -22,7 +22,7 @@ import android.os.IBinder;
 import android.os.Message;
 import android.os.SystemClock;
 
-/*
+/**
  * 监测申请过的职位申请状态变更！
  */
 public class LongRunningService extends Service {

@@ -10,14 +10,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+
 import com.hbut.internship.R;
 import com.hbut.internship.util.NetWorkUtil;
 import com.hbut.internship.util.ToastUtil;
 
 /**
  * 启动时的欢迎界面
+ * 
  * @author Nie
- *
+ * 
  */
 public class StartActivity extends BaseActivity {
 
@@ -27,11 +29,14 @@ public class StartActivity extends BaseActivity {
 	private Runnable updateThread;
 	private Dialog dialog;
 
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_start);
+
+		
 
 		// 创建handler对象
 		handler = new Handler();

@@ -192,56 +192,12 @@ public class DaohangActivity extends BaseActivity implements OnClickListener,
 
 	}
 
-	@Override
-	protected void onDestroy() {
-		// TODO Auto-generated method stub
-		super.onDestroy();
-		mBaiduMap.setMyLocationEnabled(false);
-		mMapView.onDestroy();
-		mMapView = null;
-		mSearch.destroy();
-		if (routePlanSearch != null) {
-			routePlanSearch.destroy();
-		}
-	}
-
-	@Override
-	protected void onResume() {
-		// TODO Auto-generated method stub
-		super.onResume();
-		mMapView.onResume();
-	}
-
-	@Override
-	protected void onStart() {
-		// TODO Auto-generated method stub
-		super.onStart();
-
-		// centerToMyLocation(45.0, 45.0);
-		LocationUtils.initLocation(mBaiduMap, lat, lon);
-	}
-
-	@Override
-	protected void onStop() {
-		// TODO Auto-generated method stub
-		super.onStop();
-		// 停止定位
-		mBaiduMap.setMyLocationEnabled(false);
-		mLocationClient.stop();
-	}
-
-	@Override
-	protected void onPause() {
-		// TODO Auto-generated method stub
-		super.onPause();
-		mMapView.onPause();
-	}
-
+	
 	@Override
 	public void onClick(View v) {
 		// TODO Auto-generated method stub
 		switch (v.getId()) {
-		case R.id.imbt_daohang_location:
+		case R.id.imbt_daohang_location://定位按钮
 			flag = true;// 设置成已经定位
 			mBaiduMap.setMyLocationEnabled(true);
 			if (!mLocationClient.isStarted())
@@ -289,7 +245,7 @@ public class DaohangActivity extends BaseActivity implements OnClickListener,
 				ToastUtil.showtoast("抱歉，请先定位");
 			}
 			break;
-		case R.id.bt_daohang_daohang:
+		case R.id.bt_daohang_daohang://调用百度地图导航
 			if (flag) {
 				paraOption = new NaviParaOption();
 				LatLng latLng1 = new LatLng(mLatitude, mLongtitude);
@@ -297,7 +253,7 @@ public class DaohangActivity extends BaseActivity implements OnClickListener,
 				paraOption.startName("从这里开始");
 				LatLng latLng2 = new LatLng(lat, lon);
 				paraOption.endPoint(latLng2);
-				paraOption.endName("到这里结束");
+				paraOption.endName(ecity);
 				try {
 
 					BaiduMapNavigation.openBaiduMapNavi(paraOption, this);
@@ -310,7 +266,6 @@ public class DaohangActivity extends BaseActivity implements OnClickListener,
 			} else {
 				ToastUtil.showtoast("抱歉，请先定位");
 			}
-
 			break;
 		default:
 			break;
@@ -493,4 +448,50 @@ public class DaohangActivity extends BaseActivity implements OnClickListener,
 		// TODO Auto-generated method stub
 
 	}
+	
+	@Override
+	protected void onDestroy() {
+		// TODO Auto-generated method stub
+		super.onDestroy();
+		mBaiduMap.setMyLocationEnabled(false);
+		mMapView.onDestroy();
+		mMapView = null;
+		mSearch.destroy();
+		if (routePlanSearch != null) {
+			routePlanSearch.destroy();
+		}
+	}
+
+	@Override
+	protected void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
+		mMapView.onResume();
+	}
+
+	@Override
+	protected void onStart() {
+		// TODO Auto-generated method stub
+		super.onStart();
+
+		// centerToMyLocation(45.0, 45.0);
+		LocationUtils.initLocation(mBaiduMap, lat, lon);
+	}
+
+	@Override
+	protected void onStop() {
+		// TODO Auto-generated method stub
+		super.onStop();
+		// 停止定位
+		mBaiduMap.setMyLocationEnabled(false);
+		mLocationClient.stop();
+	}
+
+	@Override
+	protected void onPause() {
+		// TODO Auto-generated method stub
+		super.onPause();
+		mMapView.onPause();
+	}
+
 }
