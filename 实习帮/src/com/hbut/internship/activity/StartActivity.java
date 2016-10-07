@@ -11,7 +11,8 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import com.hbut.internship.R;
-import com.hbut.internship.view.UIHelper;
+import com.hbut.internship.util.NetWorkUtil;
+import com.hbut.internship.util.ToastUtil;
 
 /**
  * 启动时的欢迎界面
@@ -38,9 +39,9 @@ public class StartActivity extends BaseActivity {
 		// 创建接口Runnable 线程
 		updateThread = new Runnable() {
 			public void run() {
-				if (!UIHelper.checkNetState(StartActivity.this)) {
+				if (!NetWorkUtil.checkNetState(StartActivity.this)) {
 					netDialog(StartActivity.this, R.layout.net_dialog);
-					UIHelper.ToastMessage(StartActivity.this, "网络未连接,请连接网络");
+					ToastUtil.showtoast("网络未连接，请检查网络");
 
 				} else {
 					Intent intent = new Intent(StartActivity.this,

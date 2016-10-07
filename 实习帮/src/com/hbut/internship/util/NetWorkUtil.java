@@ -1,32 +1,16 @@
-package com.hbut.internship.view;
+package com.hbut.internship.util;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.widget.Toast;
 
 /**
- * ��������
- * 
- * @author LiCong
- * 
+ * 网络检查工具
+ * @author Nie
+ *
  */
-public class UIHelper {
-	/**
-	 * ����Toast��Ϣ
-	 * 
-	 * @param msg
-	 */
-	public static void ToastMessage(Context con, String msg) {
-		Toast.makeText(con, msg, Toast.LENGTH_SHORT).show();
-	}
-
-	/**
-	 * �ж���û������
-	 * 
-	 * @param context
-	 * @return boolean
-	 */
+public class NetWorkUtil {
+	
 	public static boolean checkNetState(Context context) {
 		boolean netstate = false;
 		ConnectivityManager connectivity = (ConnectivityManager) context
