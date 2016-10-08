@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 红色按钮的点击效果，初试为红色，点击后为淡红色 -->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:drawable="@drawable/shape_lightred_btnbg" android:state_pressed="true"/>
+    <item android:drawable="@drawable/shape_red_btnbg"/>
+
+</selector>

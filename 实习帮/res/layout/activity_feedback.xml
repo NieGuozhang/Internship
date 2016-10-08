@@ -73,7 +73,7 @@
                 android:background="@drawable/shape_edit_huise"
                 android:text="发送"
                 android:textColor="#FFFFFF"
-                android:textSize="30dp" />
+                android:textSize="20sp" />
         </LinearLayout>
     </LinearLayout>
 

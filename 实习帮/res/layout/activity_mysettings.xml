@@ -36,7 +36,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         android:layout_weight="12"
         android:background="#E0E0E0"
         android:gravity="left|center_vertical|top"
@@ -48,13 +48,13 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:background="@drawable/white_linearlayout_selector"
-            android:drawableRight="@drawable/password"
+            android:drawableRight="@drawable/mdfpassword"
             android:gravity="left|center_vertical"
             android:padding="5dp"
             android:paddingLeft="20dp"
             android:text="修改密码"
             android:textColor="#1C1C1C"
-            android:textSize="20dp" />
+            android:textSize="18sp" />
 
         <Button
             android:id="@+id/bt_feedback"
@@ -68,7 +68,7 @@
             android:paddingLeft="20dp"
             android:text="意见反馈"
             android:textColor="#1C1C1C"
-            android:textSize="20dp" />
+            android:textSize="18sp" />
 
         <Button
             android:id="@+id/bt_about"
@@ -82,19 +82,19 @@
             android:paddingLeft="20dp"
             android:text="关于"
             android:textColor="#1C1C1C"
-            android:textSize="20dp" />
+            android:textSize="18sp" />
 
         <Button
             android:id="@+id/bt_exitlogin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
+            android:layout_margin="5dp"
             android:layout_marginTop="50dp"
-            android:background="@drawable/shape"
+            android:background="@drawable/red_button_selector"
             android:gravity="center"
             android:text="退出登录"
             android:textColor="#FFFFFF"
-            android:textSize="30dp" />
+            android:textSize="25sp" />
     </LinearLayout>
 
 </LinearLayout>

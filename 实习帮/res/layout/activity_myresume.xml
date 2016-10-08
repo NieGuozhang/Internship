@@ -414,7 +414,7 @@
                     android:layout_height="match_parent"
                     android:layout_margin="2dp"
                     android:layout_weight="1"
-                    android:background="@drawable/shape"
+                    android:background="@drawable/red_button_selector"
                     android:text="修改简历"
                     android:textColor="#FFFFFF" />
 
@@ -424,7 +424,7 @@
                     android:layout_height="match_parent"
                     android:layout_margin="2dp"
                     android:layout_weight="1"
-                    android:background="@drawable/shape"
+                    android:background="@drawable/red_button_selector"
                     android:text="删除简历"
                     android:textColor="#FFFFFF" />
             </LinearLayout>
