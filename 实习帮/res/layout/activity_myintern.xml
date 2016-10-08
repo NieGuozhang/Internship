@@ -432,7 +432,7 @@
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
                     android:layout_weight="1"
-                    android:background="@drawable/shape2_blue"
+                    android:background="@drawable/bluebutton_selector"
                     android:gravity="center"
                     android:text="确认"
                     android:textColor="#FFFFFF" />

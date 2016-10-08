@@ -3,6 +3,8 @@ package com.hbut.internship.activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.preference.PreferenceManager;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -31,6 +33,20 @@ public class LoginActivity extends BaseActivity {
 	private String password;
 	private Student student;
 
+	private Handler handler = new Handler() {
+		public void handleMessage(Message msg) {
+			switch (msg.what) {
+			case 0:
+				ToastUtil.showtoast("登录失败！");
+				linearLayout.setVisibility(View.GONE);
+				break;
+
+			default:
+				break;
+			}
+		};
+	};
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -39,7 +55,7 @@ public class LoginActivity extends BaseActivity {
 
 		editor1 = getSharedPreferences("Student", MODE_PRIVATE).edit();
 		pref = PreferenceManager.getDefaultSharedPreferences(this);
-		
+
 		findView();
 
 		boolean isRemember = pref.getBoolean("remember_password", false);
@@ -50,6 +66,30 @@ public class LoginActivity extends BaseActivity {
 			accountEditText.setText(account);
 			passwordEdittext.setText(password);
 			issavepassword.setChecked(true);
+			new Thread(new Runnable() {
+
+				@Override
+				public void run() {
+					// TODO Auto-generated method stub
+					try {
+						if (Internet.login(account, password)) {
+
+							Intent intent = new Intent();
+							intent.setClass(LoginActivity.this,
+									MainActivity.class);
+							startActivity(intent);
+							finish();
+						} else {
+							Message msg = new Message();
+							msg.what = 0;
+							handler.sendMessage(msg);
+						}
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			}).start();
 		}
 
 		loginButton.setOnClickListener(new OnClickListener() {
@@ -65,7 +105,7 @@ public class LoginActivity extends BaseActivity {
 					public void run() {
 						// TODO Auto-generated method stub
 						try {
-							//Internet.login(account, password)
+							// Internet.login(account, password)
 							if (true) {
 								editor = pref.edit();
 								if (issavepassword.isChecked()) {
@@ -102,8 +142,10 @@ public class LoginActivity extends BaseActivity {
 								startActivity(intent);
 								finish();
 							} else {
-								ToastUtil.showtoast("登录失败！");
-								linearLayout.setVisibility(View.GONE);
+								Message msg = new Message();
+								msg.what = 0;
+								handler.sendMessage(msg);
+
 							}
 						} catch (Exception e) {
 							// TODO Auto-generated catch block

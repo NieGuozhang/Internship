@@ -29,7 +29,7 @@ public class ForgetPassword2Activity extends BaseActivity implements
 
 	private TextView sendCode;
 
-	private String Code;
+	private String Code=null;
 
 	private Handler handler = new Handler() {
 		public void handleMessage(Message msg) {
@@ -103,15 +103,18 @@ public class ForgetPassword2Activity extends BaseActivity implements
 				}
 			}).start();
 			break;
-		case R.id.bt_fp2_confirm:
+		case R.id.bt_fp2_confirm:// 确认按钮的点击事件
 			final String newpwd,
 			newpwd1;
 			newpwd = newpassword.getText().toString();// 获取新密码
 			newpwd1 = newpasswordAgain.getText().toString();// 再次获取新密码
 
 			final String code = inputVFcode.getText().toString();// 获取编辑框中输入的验证码。
-
-			if (!newpwd.equals(newpwd1)) {// 新密码不同，。提醒用户从新输入新密码。
+			if (newpwd.equals("") || newpwd1.equals("")) {
+				ToastUtil.showtoast("请输入新密码");
+			} else if (code.equals("")) {
+				ToastUtil.showtoast("请登录邮箱，输入相应的验证码");
+			} else if (!newpwd.equals(newpwd1)) {// 新密码不同，。提醒用户从新输入新密码。
 				ToastUtil.showToast(MyApplicationUtil.getContext(),
 						"您两次输入的新密码不一致，请重新输入新密码！");
 			} else {// 若两次输入的新密码相同，可以将新密码保存至后台

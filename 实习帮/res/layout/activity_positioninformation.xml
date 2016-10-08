@@ -123,6 +123,7 @@
                     android:id="@+id/learLayout_enterprise"
                     android:layout_width="match_parent"
                     android:layout_height="100dp"
+                    android:background="@drawable/white_linearlayout_selector"
                     android:orientation="horizontal" >
 
                     <LinearLayout
@@ -225,6 +226,7 @@
                     android:id="@+id/linearLayout_poaddress"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/white_linearlayout_selector"
                     android:gravity="center_vertical"
                     android:orientation="vertical" >
 

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- LinearLayout的点击效果，初试为白色背景，点击后，颜色变暗 -->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:drawable="@color/huise" android:state_pressed="true"/>
+    <item android:drawable="@color/white"/>
+
+</selector>

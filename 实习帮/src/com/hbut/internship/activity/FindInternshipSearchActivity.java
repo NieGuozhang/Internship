@@ -247,7 +247,7 @@ public class FindInternshipSearchActivity extends BaseActivity implements
 		popupWindow.setBackgroundDrawable(new PaintDrawable());
 		popupWindow.setFocusable(true);
 
-		popupWindow.setHeight(ScreenUtils.getScreenH(this) * 2 / 3);
+		popupWindow.setHeight(ScreenUtils.getScreenH(this) * 3/ 7);
 		popupWindow.setWidth(ScreenUtils.getScreenW(this));
 
 		popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
