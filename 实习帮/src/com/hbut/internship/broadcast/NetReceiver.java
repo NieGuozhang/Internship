@@ -10,8 +10,9 @@ import android.widget.Toast;
 
 /**
  * 网络连接状态广播
+ * 
  * @author Nie
- *
+ * 
  */
 public class NetReceiver extends BroadcastReceiver {
 
@@ -21,7 +22,7 @@ public class NetReceiver extends BroadcastReceiver {
 		if (ConnectivityManager.CONNECTIVITY_ACTION.equals(action)) {
 			boolean isConnected = NetWorkUtil.isNetworkConnected(context);
 			if (isConnected) {
-				Toast.makeText(context, "已经连接网络", Toast.LENGTH_LONG).show();
+
 			} else {
 				Toast.makeText(context, "已经断开网络", Toast.LENGTH_LONG).show();
 			}

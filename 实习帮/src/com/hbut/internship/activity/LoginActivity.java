@@ -39,13 +39,8 @@ public class LoginActivity extends BaseActivity {
 
 		editor1 = getSharedPreferences("Student", MODE_PRIVATE).edit();
 		pref = PreferenceManager.getDefaultSharedPreferences(this);
-
-		accountEditText = (EditText) findViewById(R.id.et_inputaccount);
-		passwordEdittext = (EditText) findViewById(R.id.et_inputpassword);
-		loginButton = (Button) findViewById(R.id.bt_login);
-		issavepassword = (CheckBox) findViewById(R.id.cb_issavapassword);
-		forgetpassword = (Button) findViewById(R.id.bt_forgetpassword);
-		linearLayout=(LinearLayout) findViewById(R.id.linearLayout_loginprogress);
+		
+		findView();
 
 		boolean isRemember = pref.getBoolean("remember_password", false);
 		if (isRemember) {
@@ -70,7 +65,8 @@ public class LoginActivity extends BaseActivity {
 					public void run() {
 						// TODO Auto-generated method stub
 						try {
-							if (Internet.login(account, password)) {
+							//Internet.login(account, password)
+							if (true) {
 								editor = pref.edit();
 								if (issavepassword.isChecked()) {
 									editor.putBoolean("remember_password", true);
@@ -126,5 +122,15 @@ public class LoginActivity extends BaseActivity {
 				startActivity(intent);
 			}
 		});
+	}
+
+	private void findView() {
+		accountEditText = (EditText) findViewById(R.id.et_inputaccount);
+		passwordEdittext = (EditText) findViewById(R.id.et_inputpassword);
+		loginButton = (Button) findViewById(R.id.bt_login);
+		issavepassword = (CheckBox) findViewById(R.id.cb_issavapassword);
+		forgetpassword = (Button) findViewById(R.id.bt_forgetpassword);
+		linearLayout = (LinearLayout) findViewById(R.id.linearLayout_loginprogress);
+
 	}
 }

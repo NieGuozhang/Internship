@@ -29,7 +29,7 @@ import com.internship.model.Student;
 
 public class PersonalInformationActivity extends BaseActivity {
 
-	private SharedPreferences pref;
+	private SharedPreferences pref,pref1;
 	private SharedPreferences.Editor editor;
 	private static final int TAKE_PHOTO = 1;
 	private static final int CROP_PHOTO = 2;
@@ -54,7 +54,9 @@ public class PersonalInformationActivity extends BaseActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_personalinfomation);
 
+		editor=getSharedPreferences("StudentInfo", MODE_PRIVATE).edit();
 		pref = getSharedPreferences("Student", MODE_PRIVATE);
+		pref1=getSharedPreferences("StudentInfo", MODE_PRIVATE);
 
 		back = (ImageButton) findViewById(R.id.imbt_personalinfo_back);
 		back.setOnClickListener(new OnClickListener() {
@@ -127,6 +129,7 @@ public class PersonalInformationActivity extends BaseActivity {
 
 		// 性别的选择
 		sexButton = (Button) findViewById(R.id.bt_pi_sex);
+		sexButton.setText(pref1.getString("sex", "请选择"));
 		sexButton.setOnClickListener(new OnClickListener() {
 
 			@Override

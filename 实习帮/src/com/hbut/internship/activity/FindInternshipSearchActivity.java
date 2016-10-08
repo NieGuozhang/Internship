@@ -28,7 +28,6 @@ import com.hbut.internship.R;
 import com.hbut.internship.adapter.FirstClassAdapter;
 import com.hbut.internship.adapter.PositionListViewAdapter;
 import com.hbut.internship.adapter.SecondClassAdapter;
-import com.hbut.internship.util.FiterUtil;
 import com.hbut.internship.util.Internet;
 import com.hbut.internship.util.ScreenUtils;
 import com.internship.model.FirstClassItem;
@@ -39,18 +38,14 @@ public class FindInternshipSearchActivity extends BaseActivity implements
 		OnClickListener {
 
 	// 筛选
-	/** 左侧一级分类的数据 */
+	// ** 左侧一级分类的数据 *//*
 	private List<FirstClassItem> firstList;
-	/** 右侧二级分类的数据 */
+	// ** 右侧二级分类的数据 *//*
 	private List<SecondClassItem> secondList;
-	/** 使用PopupWindow显示一级分类和二级分类 */
+	// ** 使用PopupWindow显示一级分类和二级分类 *//*
 	private PopupWindow popupWindow;
-	/** 左侧和右侧两个ListView */
+	// ** 左侧和右侧两个ListView *//*
 	private ListView leftLV, rightLV;
-	// 弹出PopupWindow时背景变暗
-	private View darkView;
-	// 弹出PopupWindow时，背景变暗的动画
-	private Animation animIn, animOut;
 
 	private List<Position> mList = new ArrayList<Position>();
 	private List<Position> positionList;
@@ -84,15 +79,12 @@ public class FindInternshipSearchActivity extends BaseActivity implements
 		setContentView(R.layout.activity_findinternshipsearch);
 
 		findView();
-		FiterUtil.initData(firstList);
+		initData();
 		initPopup();
 
 	}
 
 	private void findView() {
-		darkView = findViewById(R.id.main_darkview);
-		animIn = AnimationUtils.loadAnimation(this, R.anim.fade_in_anim);
-		animOut = AnimationUtils.loadAnimation(this, R.anim.fade_out_anim);
 		back = (ImageButton) findViewById(R.id.imbt_findinternship_back);
 		back.setOnClickListener(this);
 
@@ -128,6 +120,39 @@ public class FindInternshipSearchActivity extends BaseActivity implements
 		fiter.setOnClickListener(this);
 		// 筛选后的数量统计
 		fiternumber = (TextView) findViewById(R.id.tv_searchresultnumber);
+	}
+
+	private void initData() {
+		firstList = new ArrayList<FirstClassItem>();
+
+		ArrayList<SecondClassItem> salaryList = new ArrayList<SecondClassItem>();
+		salaryList.add(new SecondClassItem(101, "3K以下"));
+		salaryList.add(new SecondClassItem(102, "3K-6K"));
+		salaryList.add(new SecondClassItem(103, "6K以上"));
+		firstList.add(new FirstClassItem(1, "薪资", salaryList));
+		// 2实习地点
+		ArrayList<SecondClassItem> poaddressList = new ArrayList<SecondClassItem>();
+		poaddressList.add(new SecondClassItem(201, "天津"));
+		poaddressList.add(new SecondClassItem(202, "北京"));
+		poaddressList.add(new SecondClassItem(203, "秦皇岛"));
+		poaddressList.add(new SecondClassItem(204, "沈阳"));
+		poaddressList.add(new SecondClassItem(205, "大连"));
+		poaddressList.add(new SecondClassItem(206, "哈尔滨"));
+		poaddressList.add(new SecondClassItem(207, "锦州"));
+		poaddressList.add(new SecondClassItem(208, "上海"));
+		poaddressList.add(new SecondClassItem(209, "杭州"));
+		poaddressList.add(new SecondClassItem(210, "南京"));
+		poaddressList.add(new SecondClassItem(211, "嘉兴"));
+		poaddressList.add(new SecondClassItem(212, "苏州"));
+		firstList.add(new FirstClassItem(2, "实习地点", poaddressList));
+		// 3学历要求
+		ArrayList<SecondClassItem> educationList = new ArrayList<SecondClassItem>();
+		educationList.add(new SecondClassItem(301, "无要求"));
+		educationList.add(new SecondClassItem(302, "专科"));
+		educationList.add(new SecondClassItem(303, "本科"));
+		educationList.add(new SecondClassItem(304, "研究生"));
+		firstList.add(new FirstClassItem(3, "学历要求", educationList));
+
 	}
 
 	@Override
@@ -203,11 +228,8 @@ public class FindInternshipSearchActivity extends BaseActivity implements
 				popupWindow
 						.showAsDropDown(findViewById(R.id.bt_searchposition_fiter));
 				popupWindow.setAnimationStyle(-1);
-				// 背景变暗
-				darkView.startAnimation(animIn);
-				darkView.setVisibility(View.VISIBLE);
-			}
 
+			}
 			break;
 		default:
 			break;
@@ -231,8 +253,6 @@ public class FindInternshipSearchActivity extends BaseActivity implements
 		popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
 			@Override
 			public void onDismiss() {
-				darkView.startAnimation(animOut);
-				darkView.setVisibility(View.GONE);
 
 				leftLV.setSelection(0);
 				rightLV.setSelection(0);
@@ -305,11 +325,6 @@ public class FindInternshipSearchActivity extends BaseActivity implements
 		});
 	}
 
-	// 顶部第一个标签的点击事件
-	private void tab1OnClick() {
-
-	}
-
 	// 刷新右侧ListView
 	private void updateSecondListView(List<SecondClassItem> list2,
 			SecondClassAdapter secondAdapter) {
@@ -322,4 +337,5 @@ public class FindInternshipSearchActivity extends BaseActivity implements
 	private void handleResult(int firstId, int secondId, String selectedName) {
 
 	}
+
 }

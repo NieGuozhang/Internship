@@ -5,13 +5,12 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
-import android.os.Handler;
+import android.view.KeyEvent;
 import android.view.Window;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.TabHost;
-
 import com.hbut.internship.R;
 import com.hbut.internship.broadcast.NetReceiver;
 import com.hbut.internship.util.ToastUtil;
@@ -21,8 +20,7 @@ public class MainActivity extends TabActivity {
 	NetReceiver mReceiver = new NetReceiver();
 	IntentFilter mFilter = new IntentFilter();
 
-	private boolean isExit = false;// 用于判断连续两次按back键
-	private Handler handler = new Handler();
+	private long exitTime = 0;
 
 	private TabHost tabhost;
 	private RadioGroup main_radiogroup;
@@ -84,23 +82,18 @@ public class MainActivity extends TabActivity {
 	}
 
 	@Override
-	public void onBackPressed() {
-		// TODO Auto-generated method stub
-		moveTaskToBack(true);
-		if (isExit) {
-			ActivityCollector.finishAll();// 退出所有的Activity，退出APP
-		} else {
-			ToastUtil.showtoast("再按一次退出");
-			isExit = true;// 两秒之内为true;
-			handler.postDelayed(new Runnable() {
-				// 两秒之后将isExit重新置为false
-
-				@Override
-				public void run() {
-					// TODO Auto-generated method stub
-					isExit = false;
-				}
-			}, 2000);
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		if (keyCode == KeyEvent.KEYCODE_BACK
+				&& event.getAction() == KeyEvent.ACTION_DOWN) {
+			if ((System.currentTimeMillis() - exitTime) > 2000) {
+				ToastUtil.showtoast("再按一次退出应用");
+				exitTime = System.currentTimeMillis();
+			} else {
+				finish();
+				System.exit(0);
+			}
+			return true;
 		}
+		return super.onKeyDown(keyCode, event);
 	}
 }

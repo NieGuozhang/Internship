@@ -92,7 +92,7 @@
                 android:id="@+id/tv_searchresultnumber"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
+                android:layout_margin="2dp"
                 android:drawableRight="@drawable/fiternum"
                 android:gravity="left|center_vertical"
                 android:paddingLeft="10dp"
@@ -110,17 +110,15 @@
                 android:id="@+id/bt_searchposition_fiter"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
+                android:layout_margin="2dp"
                 android:background="@drawable/btbg_red"
                 android:drawableRight="@drawable/shaixuan"
                 android:gravity="center"
-                android:padding="5dp"
                 android:text="筛选"
                 android:textColor="#FFFFFF"
                 android:textSize="18sp" />
         </LinearLayout>
     </LinearLayout>
-
     <include layout="@layout/line" />
 
     <ListView
@@ -130,12 +128,4 @@
         android:padding="5dp"
         android:scrollbars="none" >
     </ListView>
-
-    <View
-        android:id="@+id/main_darkview"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/dark_bg"
-        android:visibility="gone" />
-
 </LinearLayout>

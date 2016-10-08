@@ -63,7 +63,7 @@ public class StartActivity extends BaseActivity {
 				if (version >= 5) {
 					// 自定义动画跳转
 					// 淡入浅出
-					overridePendingTransition(R.anim.in, R.anim.out);
+					overridePendingTransition(R.anim.fade_in_anim, R.anim.fade_out_anim);
 					// 执行handler的postdelayed，放到线程中
 				}
 			}
