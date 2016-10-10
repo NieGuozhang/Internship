@@ -4,8 +4,10 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.litepal.crud.DataSupport;
 
-public class School implements Serializable{
+
+public class School  extends DataSupport implements Serializable{
 	
 	/**
 	 * 

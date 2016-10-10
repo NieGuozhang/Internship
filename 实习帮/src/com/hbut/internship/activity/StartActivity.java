@@ -63,7 +63,8 @@ public class StartActivity extends BaseActivity {
 				if (version >= 5) {
 					// 自定义动画跳转
 					// 淡入浅出
-					overridePendingTransition(R.anim.fade_in_anim, R.anim.fade_out_anim);
+					overridePendingTransition(R.anim.fade_in_anim,
+							R.anim.fade_out_anim);
 					// 执行handler的postdelayed，放到线程中
 				}
 			}
@@ -104,7 +105,9 @@ public class StartActivity extends BaseActivity {
 	}
 
 	// 按两次返回键退出
+	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		// TODO Auto-generated method stub
 		if (keyCode == KeyEvent.KEYCODE_BACK) {
 			StartActivity.this.finish();
 			System.exit(0);

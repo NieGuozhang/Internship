@@ -21,7 +21,7 @@ import com.hbut.internship.util.TextToDBCUtil;
 import com.hbut.internship.util.ToastUtil;
 import com.internship.model.CV;
 
-public class MyResumeActivity extends BaseActivity {
+public class MyResumeActivity extends BaseActivity implements OnClickListener {
 
 	private SharedPreferences pref;
 
@@ -46,8 +46,8 @@ public class MyResumeActivity extends BaseActivity {
 				finish();
 				break;
 			case 1:
-				ToastUtil
-						.showToast(MyApplicationUtil.getContext(), "删除简历失败，请重新操作！");
+				ToastUtil.showToast(MyApplicationUtil.getContext(),
+						"删除简历失败，请重新操作！");
 				break;
 			default:
 				break;
@@ -86,6 +86,16 @@ public class MyResumeActivity extends BaseActivity {
 			e.printStackTrace();
 		}
 
+		findView();
+		initView();
+
+		back.setOnClickListener(this);
+		modify.setOnClickListener(this);
+		delete.setOnClickListener(this);
+	}
+
+	private void findView() {
+
 		// 初始化按钮
 		back = (ImageButton) findViewById(R.id.imbt_myresume_back);
 		modify = (Button) findViewById(R.id.bt_myresume_modify);
@@ -107,7 +117,10 @@ public class MyResumeActivity extends BaseActivity {
 		interestion = (TextView) findViewById(R.id.tv_myresume_interestion);
 		graduateschool = (TextView) findViewById(R.id.tv_myresume_graduateschool);
 		age = (TextView) findViewById(R.id.tv_myresume_age);
+	}
 
+	private void initView() {
+		// TODO Auto-generated method stub
 		// 为控件赋值
 		name.setText(cv.getStudent().getStuName());// 姓名
 		sex.setText(cv.getStudent().getStuSex());// 性别
@@ -123,109 +136,97 @@ public class MyResumeActivity extends BaseActivity {
 		interestion.setText(TextToDBCUtil.toDBC(cv.getInterestion()));
 		introduction.setText(TextToDBCUtil.toDBC(cv.getIntroduction()));
 		honour.setText(TextToDBCUtil.toDBC(cv.getHonour()));
-		
-		back.setOnClickListener(new OnClickListener() {
+	}
 
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				finish();
-			}
-		});
+	@Override
+	public void onClick(View v) {
+		// TODO Auto-generated method stub
+		switch (v.getId()) {
+		case R.id.imbt_myresume_back:// 返回按钮
+			finish();
+			break;
+		case R.id.bt_myresume_delete:// 删除简历按钮
+			AlertDialog.Builder dialog = new AlertDialog.Builder(
+					MyResumeActivity.this);
+			dialog.setTitle("提示");
+			dialog.setIcon(android.R.drawable.ic_dialog_info);
+			dialog.setMessage("确定要删除该简历吗？");
+			dialog.setPositiveButton("确定",
+					new DialogInterface.OnClickListener() {
 
-		modify.setOnClickListener(new OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							// TODO Auto-generated method stub
+							new Thread(new Runnable() {
 
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				AlertDialog.Builder dialog = new AlertDialog.Builder(
-						MyResumeActivity.this);
-				dialog.setTitle("提示");
-				dialog.setIcon(android.R.drawable.ic_dialog_info);
-				dialog.setMessage("确定要修改简历内容吗？");
-				dialog.setPositiveButton("确定",
-						new DialogInterface.OnClickListener() {
+								@Override
+								public void run() {
+									// TODO Auto-generated method stub
+									try {
+										// 删除简历成功
+										if (Internet.deleteCv(studentID)) {
+											new Thread(new Runnable() {
 
-							@Override
-							public void onClick(DialogInterface dialog,
-									int which) {
-								// TODO Auto-generated method stub
-								Intent intent = new Intent(
-										MyResumeActivity.this,
-										NewMyResumeActivity.class);
-								intent.putExtra("modifyresume", "modifyresume");
-								startActivity(intent);
-							}
-						});
-				dialog.setNegativeButton("取消", null);
-				dialog.setCancelable(false);
-				dialog.show();
-			}
-		});
+												@Override
+												public void run() {
+													// TODO Auto-generated
+													// method stub
+													Message msg = new Message();
+													msg.what = 0;
+													handler.sendMessage(msg);
+												}
+											}).start();
 
-		delete.setOnClickListener(new OnClickListener() {
+										} else {
+											new Thread(new Runnable() {
 
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				AlertDialog.Builder dialog = new AlertDialog.Builder(
-						MyResumeActivity.this);
-				dialog.setTitle("提示");
-				dialog.setIcon(android.R.drawable.ic_dialog_info);
-				dialog.setMessage("确定要删除该简历吗？");
-				dialog.setPositiveButton("确定",
-						new DialogInterface.OnClickListener() {
+												@Override
+												public void run() {
+													// TODO Auto-generated
+													// method stub
+													Message msg = new Message();
+													msg.what = 1;
+													handler.sendMessage(msg);
+												}
+											}).start();
 
-							@Override
-							public void onClick(DialogInterface dialog,
-									int which) {
-								// TODO Auto-generated method stub
-								new Thread(new Runnable() {
-
-									@Override
-									public void run() {
-										// TODO Auto-generated method stub
-										try {
-											// 删除简历成功
-											if (Internet.deleteCv(studentID)) {
-												new Thread(new Runnable() {
-
-													@Override
-													public void run() {
-														// TODO Auto-generated
-														// method stub
-														Message msg = new Message();
-														msg.what = 0;
-														handler.sendMessage(msg);
-													}
-												}).start();
-
-											} else {
-												new Thread(new Runnable() {
-
-													@Override
-													public void run() {
-														// TODO Auto-generated
-														// method stub
-														Message msg = new Message();
-														msg.what = 1;
-														handler.sendMessage(msg);
-													}
-												}).start();
-
-											}
-										} catch (Exception e) {
-											// TODO Auto-generated catch block
-											e.printStackTrace();
 										}
+									} catch (Exception e) {
+										// TODO Auto-generated catch block
+										e.printStackTrace();
 									}
-								}).start();
-							}
-						});
-				dialog.setNegativeButton("取消", null);
-				dialog.setCancelable(false);
-				dialog.show();
-			}
-		});
+								}
+							}).start();
+						}
+					});
+			dialog.setNegativeButton("取消", null);
+			dialog.setCancelable(false);
+			dialog.show();
+			break;
+		case R.id.bt_myresume_modify:// 修改简历按钮
+			AlertDialog.Builder dialog1 = new AlertDialog.Builder(
+					MyResumeActivity.this);
+			dialog1.setTitle("提示");
+			dialog1.setIcon(android.R.drawable.ic_dialog_info);
+			dialog1.setMessage("确定要修改简历内容吗？");
+			dialog1.setPositiveButton("确定",
+					new DialogInterface.OnClickListener() {
+
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							// TODO Auto-generated method stub
+							Intent intent = new Intent(MyResumeActivity.this,
+									NewMyResumeActivity.class);
+							intent.putExtra("modifyresume", "modifyresume");
+							startActivity(intent);
+						}
+					});
+			dialog1.setNegativeButton("取消", null);
+			dialog1.setCancelable(false);
+			dialog1.show();
+			break;
+		default:
+			break;
+		}
 	}
 }

@@ -16,7 +16,6 @@ import android.widget.AdapterView.OnItemClickListener;
 
 import com.hbut.internship.R;
 import com.hbut.internship.adapter.PositionListViewAdapter;
-import com.hbut.internship.util.Internet;
 import com.hbut.internship.view.RefreshableView;
 import com.hbut.internship.view.RefreshableView.PullToRefreshListener;
 import com.internship.model.Position;

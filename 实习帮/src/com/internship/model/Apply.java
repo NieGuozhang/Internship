@@ -2,9 +2,10 @@ package com.internship.model;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
-import java.util.Date;
 
-public class Apply implements Serializable {
+import org.litepal.crud.DataSupport;
+
+public class Apply extends DataSupport implements Serializable {
 	/**
 	 * 
 	 */

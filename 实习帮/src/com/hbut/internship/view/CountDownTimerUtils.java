@@ -6,10 +6,11 @@ import android.os.CountDownTimer;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
+import android.view.Gravity;
 import android.widget.TextView;
 
 
-/*
+/**
  * 验证码倒计时
  */
 public class CountDownTimerUtils extends CountDownTimer {
@@ -27,6 +28,7 @@ public class CountDownTimerUtils extends CountDownTimer {
 		// TODO Auto-generated method stub
 		mTextView.setClickable(false); // 设置不可点击
 		mTextView.setText(millisUntilFinished / 1000 + "秒后可重新发送"); // 设置倒计时时间
+		mTextView.setGravity(Gravity.CENTER);
 		mTextView.setBackgroundResource(R.drawable.shape_edit_huise); // 设置按钮为灰色，这时是不能点击的
 
 		/**

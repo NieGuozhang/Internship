@@ -15,6 +15,7 @@ import com.hbut.internship.R;
 import com.hbut.internship.util.IdentifyingCodeUtil;
 import com.hbut.internship.util.Internet;
 import com.hbut.internship.util.MyApplicationUtil;
+import com.hbut.internship.util.ObjectUtils;
 import com.hbut.internship.util.SendCodeToEmailUtil;
 import com.hbut.internship.util.ToastUtil;
 import com.hbut.internship.view.CountDownTimerUtils;
@@ -29,7 +30,7 @@ public class ForgetPassword2Activity extends BaseActivity implements
 
 	private TextView sendCode;
 
-	private String Code=null;
+	private String Code;
 
 	private Handler handler = new Handler() {
 		public void handleMessage(Message msg) {
@@ -118,7 +119,9 @@ public class ForgetPassword2Activity extends BaseActivity implements
 				ToastUtil.showToast(MyApplicationUtil.getContext(),
 						"您两次输入的新密码不一致，请重新输入新密码！");
 			} else {// 若两次输入的新密码相同，可以将新密码保存至后台
-				if (!Code.equalsIgnoreCase(code)) {
+				if (ObjectUtils.isNullOrEmpty(Code)) {
+					ToastUtil.showtoast("请点击发送验证码");
+				}else if (!Code.equalsIgnoreCase(code)) {
 
 					ToastUtil.showToast(MyApplicationUtil.getContext(),
 							"您输入的验证码不对，修改密码失败！");

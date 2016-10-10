@@ -123,12 +123,27 @@ public class MySettingsActivity extends BaseActivity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				Intent it = new Intent(MySettingsActivity.this,
-						LoginActivity.class);
-				startActivity(it);
-				ActivityCollector.finishAll();
-				editor.clear();
-				editor.commit();
+				AlertDialog.Builder builder = new AlertDialog.Builder(
+						MyApplicationUtil.getContext());
+				builder.setTitle("退出登录");
+				builder.setMessage("确定要退出登录吗？");
+				builder.setNegativeButton("取消", null);
+				builder.setCancelable(false);
+				builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+					
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						// TODO Auto-generated method stub
+						Intent it = new Intent(MySettingsActivity.this,
+								LoginActivity.class);
+						startActivity(it);
+						ActivityCollector.finishAll();
+						editor.clear();
+						editor.commit();
+					}
+				});
+				builder.show();
+				
 			}
 		});
 	}

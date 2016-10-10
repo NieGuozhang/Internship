@@ -118,7 +118,7 @@ public class PersonalInformationActivity extends BaseActivity {
 				PersonalInformationActivity.this);
 		if (bt != null) {
 			// Drawable drawable = new BitmapDrawable(bt);// 转换成drawable
-			userhead.setImageBitmap(PictureUtils.ratio(bt, 100f, 100f));
+			userhead.setImageBitmap(PictureUtils.ratio(bt, 50f, 50f));
 			// userhead.setImageDrawable(drawable);
 		}
 

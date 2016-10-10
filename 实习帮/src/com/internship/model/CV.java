@@ -3,7 +3,9 @@ package com.internship.model;
 import java.io.Serializable;
 import java.sql.Timestamp;
 
-public class CV implements Serializable {
+import org.litepal.crud.DataSupport;
+
+public class CV  extends DataSupport implements Serializable {
 
 	/**
 	 * 简历表实体类

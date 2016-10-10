@@ -1,23 +1,16 @@
 package com.hbut.internship.util;
 
-import android.app.Application;
-
+import org.litepal.LitePalApplication;
 import android.content.Context;
 
 /**
  * 获取当前的context
  */
-public class MyApplicationUtil extends Application {
+public class MyApplicationUtil extends LitePalApplication {
 
 	private static Context context;
 
-	@Override
-	public void onCreate() {
-		// TODO Auto-generated method stub
-		context = getApplicationContext();
-	}
-
 	public static Context getContext() {
-		return context;
+		return context=LitePalApplication.getContext();
 	}
 }

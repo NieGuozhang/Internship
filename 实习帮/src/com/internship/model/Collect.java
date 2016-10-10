@@ -4,9 +4,11 @@ import java.io.Serializable;
 import java.sql.Time;
 import java.sql.Timestamp;
 
+import org.litepal.crud.DataSupport;
 
 
-public class Collect implements Serializable{
+
+public class Collect extends DataSupport implements Serializable{
 	/**
 	 * 
 	 */

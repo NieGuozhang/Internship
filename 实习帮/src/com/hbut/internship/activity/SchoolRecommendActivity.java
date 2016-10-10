@@ -2,6 +2,9 @@ package com.hbut.internship.activity;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import org.litepal.crud.DataSupport;
+
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -23,14 +26,14 @@ import com.internship.model.Position;
 
 public class SchoolRecommendActivity extends BaseActivity {
 
-	RefreshableView refreshableView;// 下拉刷新
+	private RefreshableView refreshableView;// 下拉刷新
 	private SharedPreferences pref;
 	private List<Position> positionList = new ArrayList<Position>();
-	private TextView schoolname;
-	private String schname, schnum;
+	//private TextView schoolname;
+	private String schname, schnum,account;
 	private ListView positionListView;
 	private PositionListViewAdapter adapter;
-	
+
 	private Handler handler = new Handler() {// 主线程中更新UI
 		@Override
 		public void handleMessage(Message msg) {
@@ -38,7 +41,7 @@ public class SchoolRecommendActivity extends BaseActivity {
 			super.handleMessage(msg);
 			switch (msg.what) {
 			case 0:
-				schoolname.setText(schname + "推荐");
+				//schoolname.setText(schname + "推荐");
 				break;
 			default:
 				break;
@@ -55,7 +58,7 @@ public class SchoolRecommendActivity extends BaseActivity {
 			adapter = new PositionListViewAdapter(SchoolRecommendActivity.this,
 					R.layout.position_item, mList);
 			positionListView.setAdapter(adapter);
-		}
+		};
 	};
 
 	@Override
@@ -64,7 +67,7 @@ public class SchoolRecommendActivity extends BaseActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_schoolrecommend);
 
-		/*
+		/**
 		 * 下拉刷新。
 		 */
 		refreshableView = (RefreshableView) findViewById(R.id.schoolrecommend_refreshable_view);
@@ -74,11 +77,6 @@ public class SchoolRecommendActivity extends BaseActivity {
 
 				try {
 					Message msg = new Message();
-					String account = pref.getString("account", "");
-					schname = Internet.queryStudent(account).getSchool()
-							.getSchName();
-					schnum = Internet.queryStudent(account).getSchool()
-							.getSchNum();
 					positionList = Internet.querySchRecommend(schnum);
 					msg.obj = positionList;
 					handler1.sendMessage(msg);
@@ -86,16 +84,15 @@ public class SchoolRecommendActivity extends BaseActivity {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-
 				refreshableView.finishRefreshing();
 			}
 		}, R.id.schoolrecommend_refreshable_view);
 
 		pref = getSharedPreferences("Student", MODE_PRIVATE);
 
-		schoolname = (TextView) findViewById(R.id.tv_schoolrecommend_schoolname);
+		//schoolname = (TextView) findViewById(R.id.tv_schoolrecommend_schoolname);
 
-		final String account = pref.getString("account", "");
+		account = pref.getString("account", "");
 
 		// 获取到学校的名称。
 		class MyThread implements Runnable {
@@ -107,7 +104,8 @@ public class SchoolRecommendActivity extends BaseActivity {
 							.getSchName();
 					schnum = Internet.queryStudent(account).getSchool()
 							.getSchNum();
-					positionList = Internet.querySchRecommend(schnum);
+					List<Position> tempList=Internet.querySchRecommend(schnum);
+					DataSupport.saveAll(tempList);
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -135,6 +133,7 @@ public class SchoolRecommendActivity extends BaseActivity {
 			}
 		}).start();
 
+		positionList=DataSupport.findAll(Position.class);
 		adapter = new PositionListViewAdapter(SchoolRecommendActivity.this,
 				R.layout.position_item, positionList);
 		positionListView = (ListView) findViewById(R.id.lv_schoolrecommend);

@@ -11,16 +11,18 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.TabHost;
+import android.widget.Toast;
+
 import com.hbut.internship.R;
 import com.hbut.internship.broadcast.NetReceiver;
-import com.hbut.internship.util.ToastUtil;
+import com.hbut.internship.util.TwiceBackOutUtil;
 
 public class MainActivity extends TabActivity {
 
 	NetReceiver mReceiver = new NetReceiver();
 	IntentFilter mFilter = new IntentFilter();
-
-	private long exitTime = 0;
+	
+	 private long exitTime = 0;
 
 	private TabHost tabhost;
 	private RadioGroup main_radiogroup;
@@ -81,19 +83,27 @@ public class MainActivity extends TabActivity {
 		ActivityCollector.removeActivity(this);
 	}
 
+	/**
+	 * 两次返回退出程序
+	 */
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
-		if (keyCode == KeyEvent.KEYCODE_BACK
-				&& event.getAction() == KeyEvent.ACTION_DOWN) {
-			if ((System.currentTimeMillis() - exitTime) > 2000) {
-				ToastUtil.showtoast("再按一次退出应用");
-				exitTime = System.currentTimeMillis();
-			} else {
-				finish();
-				System.exit(0);
-			}
-			return true;
+		// TODO Auto-generated method stub
+		if (keyCode == KeyEvent.KEYCODE_BACK) {
+			exit();
+			return false;
 		}
 		return super.onKeyDown(keyCode, event);
+	}
+
+	public void exit() {
+		if ((System.currentTimeMillis() - exitTime) > 4000) {
+			Toast.makeText(getApplicationContext(), "再按一次退出应用",
+					Toast.LENGTH_SHORT).show();
+			exitTime = System.currentTimeMillis();
+		} else {
+			finish();
+			System.exit(0);
+		}
 	}
 }

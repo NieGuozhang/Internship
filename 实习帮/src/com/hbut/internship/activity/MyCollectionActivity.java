@@ -3,12 +3,13 @@ package com.hbut.internship.activity;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.litepal.crud.DataSupport;
+
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -91,14 +92,15 @@ public class MyCollectionActivity extends BaseActivity {
 				try {
 					pref = getSharedPreferences("Student", MODE_PRIVATE);
 					studentname = pref.getString("studentname", "");
-					positionList = Internet.queryCollect(studentname);
-					int len = positionList.size();
+					List<Position> tempList = Internet.queryCollect(studentname);
+					DataSupport.saveAll(tempList);//保存所有的数据至数据库
+					int len = tempList.size();
 					Time time = new Time("GMT+8");// 获取当前系统时间
 					for (int i = 0; i < len; i++) {
-						if (TimeUtils.compare_date(positionList.get(i)
+						if (TimeUtils.compare_date(tempList.get(i)
 								.getClosingdate().toString(), time.toString()) != 1) {
-							positionList.add(positionList.get(i));// 将过期的收藏置于最后面
-							positionList.remove(i);
+							tempList.add(tempList.get(i));// 将过期的收藏置于最后面
+							tempList.remove(i);
 						}
 					}
 				} catch (Exception e) {
@@ -173,7 +175,8 @@ public class MyCollectionActivity extends BaseActivity {
 				dialog.show();
 			}
 		});
-
+		
+		positionList=DataSupport.findAll(Position.class);
 		mListView = (SwipeMenuListView) findViewById(R.id.lv_mycollection);
 		adapter = new PositionListViewAdapter(MyCollectionActivity.this,
 				R.layout.position_item, positionList);

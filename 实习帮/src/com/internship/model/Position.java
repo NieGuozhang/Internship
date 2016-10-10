@@ -5,7 +5,9 @@ import java.sql.Timestamp;
 import java.util.HashSet;
 import java.util.Set;
 
-public class Position implements Serializable{
+import org.litepal.crud.DataSupport;
+
+public class Position extends DataSupport  implements Serializable{
 	/**
 	 * 
 	 */

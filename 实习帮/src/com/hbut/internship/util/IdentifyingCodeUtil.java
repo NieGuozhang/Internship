@@ -2,7 +2,7 @@ package com.hbut.internship.util;
 
 import java.util.Random;
 
-/*
+/**
  * 验证码生成器
  */
 public class IdentifyingCodeUtil {
