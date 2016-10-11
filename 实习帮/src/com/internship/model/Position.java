@@ -27,6 +27,17 @@ public class Position extends DataSupport  implements Serializable{
 	private Timestamp workstarttime;
 	private Set applies = new HashSet<Apply>();
 	private Enterprise enterprise;
+	private byte[] addressBytes;
+	
+	
+
+	public byte[] getAddressBytes() {
+		return addressBytes;
+	}
+
+	public void setAddressBytes(byte[] addressBytes) {
+		this.addressBytes = addressBytes;
+	}
 
 	public Integer getPoId() {
 		return poId;

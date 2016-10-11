@@ -35,7 +35,8 @@ public class ModifyPasswordActivity extends BaseActivity implements
 				ToastUtil.showToast(MyApplicationUtil.getContext(), "密码修改成功！");
 				break;
 			case 1:
-				ToastUtil.showToast(MyApplicationUtil.getContext(), "修改失败，请重新操作！");
+				ToastUtil.showToast(MyApplicationUtil.getContext(),
+						"修改失败，请重新操作！");
 				break;
 			default:
 				break;
@@ -69,43 +70,52 @@ public class ModifyPasswordActivity extends BaseActivity implements
 			oldpassword = oldpasswordET.getText().toString();
 			newpassword = newpasswordET.getText().toString();
 			newpassword2 = newpasswordaginET.getText().toString();
-			// 验证
-			new Thread(new Runnable() {
-				@Override
-				public void run() {
-					// TODO Auto-generated method stub
-					try {
-						if (Internet.CheckPassword(
-								pref.getString("account", ""), oldpassword,
-								newpassword)) {
-							new Thread(new Runnable() {
+			if (oldpassword.equals("")) {
+				ToastUtil.showtoast("请输入旧密码");
+			} else if (newpassword.equals("") || newpassword2.equals("")) {
+				ToastUtil.showtoast("请输入新密码");
+			} else if (!newpassword.equals(newpassword2)) {
+				ToastUtil.showtoast("两次输入的新密码不一致，请重新输入");
+			} else {
+				// 验证
+				new Thread(new Runnable() {
+					@Override
+					public void run() {
+						// TODO Auto-generated method stub
+						try {
+							if (Internet.CheckPassword(
+									pref.getString("account", ""), oldpassword,
+									newpassword)) {
+								new Thread(new Runnable() {
 
-								@Override
-								public void run() {
-									// TODO Auto-generated method stub
-									Message msg = new Message();
-									msg.what = 0;
-									handler.sendMessage(msg);
-								}
-							}).start();
+									@Override
+									public void run() {
+										// TODO Auto-generated method stub
+										Message msg = new Message();
+										msg.what = 0;
+										handler.sendMessage(msg);
+									}
+								}).start();
 
-						} else {
-							new Thread(new Runnable() {
-								@Override
-								public void run() {
-									// TODO Auto-generated method stub
-									Message msg = new Message();
-									msg.what = 1;
-									handler.sendMessage(msg);
-								}
-							}).start();
+							} else {
+								new Thread(new Runnable() {
+									@Override
+									public void run() {
+										// TODO Auto-generated method stub
+										Message msg = new Message();
+										msg.what = 1;
+										handler.sendMessage(msg);
+									}
+								}).start();
+							}
+						} catch (Exception e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
 						}
-					} catch (Exception e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
 					}
-				}
-			}).start();
+				}).start();
+			}
+
 			break;
 		case R.id.imbt_modifypassword_back:
 			finish();

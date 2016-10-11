@@ -24,7 +24,7 @@ public class NetReceiver extends BroadcastReceiver {
 			if (isConnected) {
 
 			} else {
-				Toast.makeText(context, "已经断开网络", Toast.LENGTH_LONG).show();
+				Toast.makeText(context, "已经断开网络", Toast.LENGTH_SHORT).show();
 			}
 		}
 	}

@@ -24,6 +24,7 @@ import android.widget.ImageButton;
 
 import com.hbut.internship.R;
 import com.hbut.internship.adapter.PositionListViewAdapter;
+import com.hbut.internship.util.ObjectUtils;
 import com.hbut.internship.util.TimeUtils;
 import com.hbut.internship.util.Internet;
 import com.hbut.internship.util.MyApplicationUtil;
@@ -39,7 +40,7 @@ public class MyCollectionActivity extends BaseActivity {
 
 	private SharedPreferences pref;
 	private List<Position> positionList = new ArrayList<Position>();
-	private Button clear;
+	private Button clear;// 清空按钮
 	private ImageButton back;
 	private PositionListViewAdapter adapter;
 	private SwipeMenuListView mListView;
@@ -59,17 +60,22 @@ public class MyCollectionActivity extends BaseActivity {
 		public void handleMessage(Message msg) {
 			switch (msg.what) {
 			case 0:
-				ToastUtil.showToast(MyApplicationUtil.getContext(), "取消所有收藏成功！");
+				ToastUtil
+						.showToast(MyApplicationUtil.getContext(), "取消所有收藏成功！");
 				positionList.removeAll(positionList);
 				adapter.notifyDataSetChanged();
 				mListView.invalidate();
 				break;
 			case 1:
-				ToastUtil.showToast(MyApplicationUtil.getContext(), "取消所有收藏失败！");
+				ToastUtil
+						.showToast(MyApplicationUtil.getContext(), "取消所有收藏失败！");
 				break;
 			case 2:
 				ToastUtil.showToast(MyApplicationUtil.getContext(), "取消失败！");
 				break;
+			case 3:// 收藏列表为空，隐藏清空按钮
+				clear.setVisibility(View.GONE);
+				clear.setEnabled(false);// 按钮的点击效果取消
 			default:
 				break;
 			}
@@ -92,8 +98,9 @@ public class MyCollectionActivity extends BaseActivity {
 				try {
 					pref = getSharedPreferences("Student", MODE_PRIVATE);
 					studentname = pref.getString("studentname", "");
-					List<Position> tempList = Internet.queryCollect(studentname);
-					DataSupport.saveAll(tempList);//保存所有的数据至数据库
+					List<Position> tempList = Internet
+							.queryCollect(studentname);
+					DataSupport.saveAll(tempList);// 保存所有的数据至数据库
 					int len = tempList.size();
 					Time time = new Time("GMT+8");// 获取当前系统时间
 					for (int i = 0; i < len; i++) {
@@ -121,6 +128,7 @@ public class MyCollectionActivity extends BaseActivity {
 		}
 
 		back = (ImageButton) findViewById(R.id.imbt_mycollection_back);
+
 		back.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -131,6 +139,7 @@ public class MyCollectionActivity extends BaseActivity {
 		});
 		// 清空按钮的点击事件
 		clear = (Button) findViewById(R.id.bt_mycollection_clearall);
+
 		clear.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -159,6 +168,7 @@ public class MyCollectionActivity extends BaseActivity {
 													.getInt("studentID", 0))) {
 												msg.what = 0;
 												handler1.sendMessage(msg);
+												setClearButton(positionList);
 											} else {
 												msg.what = 1;
 												handler1.sendMessage(msg);
@@ -175,8 +185,10 @@ public class MyCollectionActivity extends BaseActivity {
 				dialog.show();
 			}
 		});
-		
-		positionList=DataSupport.findAll(Position.class);
+
+		positionList = DataSupport.findAll(Position.class);
+		setClearButton(positionList);// 判断收藏列表是否为空
+
 		mListView = (SwipeMenuListView) findViewById(R.id.lv_mycollection);
 		adapter = new PositionListViewAdapter(MyCollectionActivity.this,
 				R.layout.position_item, positionList);
@@ -244,6 +256,7 @@ public class MyCollectionActivity extends BaseActivity {
 										studentname)) {
 									msg.what = position;
 									handler.sendMessage(msg);
+									setClearButton(positionList);
 								} else {
 									msg.what = 2;
 									handler1.sendMessage(msg);
@@ -270,4 +283,26 @@ public class MyCollectionActivity extends BaseActivity {
 				getResources().getDisplayMetrics());
 	}
 
+	/**
+	 * 如果收藏列表为空，隐藏清空按钮。
+	 * 
+	 * @param mList
+	 *            List收藏集合
+	 */
+	private void setClearButton(List<Position> List) {
+
+		if (ObjectUtils.isNullOrEmpty(List)) {
+			new Thread(new Runnable() {
+
+				@Override
+				public void run() {
+					// TODO Auto-generated method stub
+					Message msg = new Message();
+					msg.what = 3;// 收藏列表为空
+					handler1.sendMessage(msg);
+				}
+			}).start();
+
+		}
+	}
 }

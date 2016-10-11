@@ -123,13 +123,13 @@ public class MySettingsActivity extends BaseActivity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				AlertDialog.Builder builder = new AlertDialog.Builder(
-						MyApplicationUtil.getContext());
-				builder.setTitle("退出登录");
-				builder.setMessage("确定要退出登录吗？");
-				builder.setNegativeButton("取消", null);
-				builder.setCancelable(false);
-				builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+				AlertDialog.Builder dialog = new AlertDialog.Builder(
+						MySettingsActivity.this);
+				dialog.setTitle("退出登录");
+				dialog.setMessage("确定要退出登录吗？");
+				dialog.setNegativeButton("取消", null);
+				dialog.setCancelable(false);
+				dialog.setPositiveButton("确定", new DialogInterface.OnClickListener() {
 					
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
@@ -142,7 +142,7 @@ public class MySettingsActivity extends BaseActivity {
 						editor.commit();
 					}
 				});
-				builder.show();
+				dialog.show();
 				
 			}
 		});

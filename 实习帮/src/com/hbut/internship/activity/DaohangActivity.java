@@ -52,6 +52,7 @@ import com.hbut.internship.baidumap.overlayutil.DrivingRouteOverlay;
 import com.hbut.internship.baidumap.overlayutil.TransitRouteOverlay;
 import com.hbut.internship.baidumap.overlayutil.WalkingRouteOverlay;
 import com.hbut.internship.util.LocationUtils;
+import com.hbut.internship.util.ObjectUtils;
 import com.hbut.internship.util.TimeUtils;
 import com.hbut.internship.util.ToastUtil;
 import com.hbut.internship.view.MyOrientationListener;
@@ -112,8 +113,11 @@ public class DaohangActivity extends BaseActivity implements OnClickListener,
 		setContentView(R.layout.activity_daohang);
 
 		position = (Position) getIntent().getSerializableExtra("Position");
-		lat = getIntent().getDoubleExtra("lat", 0);
-		lon = getIntent().getDoubleExtra("lon", 0);
+		//将Position中的byte数组转化为LatLng对象，得到经纬度。
+		LatLng positionLatLng = (LatLng) ObjectUtils.ByteToObject(position
+				.getAddressBytes());
+		lat = positionLatLng.latitude;
+		lon = positionLatLng.longitude;
 
 		findView();
 
@@ -192,12 +196,11 @@ public class DaohangActivity extends BaseActivity implements OnClickListener,
 
 	}
 
-	
 	@Override
 	public void onClick(View v) {
 		// TODO Auto-generated method stub
 		switch (v.getId()) {
-		case R.id.imbt_daohang_location://定位按钮
+		case R.id.imbt_daohang_location:// 定位按钮
 			flag = true;// 设置成已经定位
 			mBaiduMap.setMyLocationEnabled(true);
 			if (!mLocationClient.isStarted())
@@ -245,7 +248,7 @@ public class DaohangActivity extends BaseActivity implements OnClickListener,
 				ToastUtil.showtoast("抱歉，请先定位");
 			}
 			break;
-		case R.id.bt_daohang_daohang://调用百度地图导航
+		case R.id.bt_daohang_daohang:// 调用百度地图导航
 			if (flag) {
 				paraOption = new NaviParaOption();
 				LatLng latLng1 = new LatLng(mLatitude, mLongtitude);
@@ -347,7 +350,7 @@ public class DaohangActivity extends BaseActivity implements OnClickListener,
 	}
 
 	/**
-	 * 路线规划监听器 
+	 * 路线规划监听器
 	 * 
 	 * 步行1分钟 0.06公里 驾车1分钟 0.55公里 公交1分钟 0.15公里
 	 * 
@@ -448,7 +451,7 @@ public class DaohangActivity extends BaseActivity implements OnClickListener,
 		// TODO Auto-generated method stub
 
 	}
-	
+
 	@Override
 	protected void onDestroy() {
 		// TODO Auto-generated method stub
